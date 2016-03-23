@@ -6,6 +6,8 @@ import mapred.util.SimpleParser;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Reducer;
 
 public class Driver {
 
@@ -17,7 +19,8 @@ public class Driver {
 		String tmpdir = parser.get("tmpdir");
 
 		getWordFeatureVector(input, tmpdir + "/feature_vector");
-		getHashtagSimilarities(tmpdir + "/feature_vector", output);
+		distributeWordFeatureVector(tmpdir + "/feature_vector", tmpdir + "distributed_feature_vector");
+		getHashtagSimilarities(tmpdir + "/distributed_feature_vector", output);
 	}
 
 	/**
@@ -31,19 +34,28 @@ public class Driver {
 	private static void getWordFeatureVector(String input, String output)
 			throws Exception {
 		Optimizedjob job = new Optimizedjob(new Configuration(), input, output,
-				"Get feature vector for all hashtags");
-		job.setClasses(HashtagMapper.class, HashtagReducer.class, null);
+				"Get feature vector for all words");
+		job.setClasses(HashtagMapper.class, HashtagReducer.class, null, null);
 		job.setMapOutputClasses(Text.class, Text.class);
 		job.run();
 	}
 
 	/**
-	 * When we have feature vector for both #job and all other hashtags, we can
-	 * use them to compute inner products. The problem is how to share the
-	 * feature vector for #job with all the mappers. Here we're using the
-	 * "Configuration" as the sharing mechanism, since the configuration object
-	 * is dispatched to all mappers at the beginning and used to setup the
-	 * mappers.
+	 *
+	 * @param input
+	 * @param output
+	 * @throws Exception
+	 */
+    private static void distributeWordFeatureVector(String input, String output)
+            throws Exception {
+        Optimizedjob job = new Optimizedjob(new Configuration(), input, output,
+                "Distribute feature vector");
+        job.setClasses(null, null, null, WordPartitioner.class);
+        job.setMapOutputClasses(Text.class, Text.class);
+        job.run();
+    }
+
+	/**
 	 * 
 	 * @param input
 	 * @param output
@@ -55,7 +67,7 @@ public class Driver {
 			ClassNotFoundException, InterruptedException {
 		Optimizedjob job = new Optimizedjob(new Configuration(), input, output,
 				"Get similarities between #job and all other hashtags");
-		job.setClasses(SimilarityMapper.class, SimilarityReducer.class, SimilarityCombiner.class);
+		job.setClasses(SimilarityMapper.class, SimilarityReducer.class, SimilarityCombiner.class, null);
 		job.setMapOutputClasses(Text.class, IntWritable.class);
 		job.run();
 	}

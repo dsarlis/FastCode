@@ -14,8 +14,7 @@ import org.apache.hadoop.mapreduce.Mapper;
 public class SimilarityMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 
 	/**
-	 * We compute the inner product of feature vector of every hashtag with that
-	 * of #job
+	 *
 	 */
 	@Override
 	protected void map(LongWritable key, Text value, Context context)

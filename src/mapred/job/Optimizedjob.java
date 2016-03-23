@@ -13,6 +13,7 @@ import org.apache.hadoop.mapred.JobClient;
 import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Partitioner;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
@@ -101,14 +102,24 @@ public class Optimizedjob extends Job {
 	 * @param combinerClass
 	 */
 	public void setClasses(Class<? extends Mapper<?, ?, ?, ?>> mapperClass,
-			Class<? extends Reducer<?, ?, ?, ?>> reducerClass,
-			Class<? extends Reducer<?, ?, ?, ?>> combinerClass) {
-		setMapperClass(mapperClass);
+                           Class<? extends Reducer<?, ?, ?, ?>> reducerClass,
+                           Class<? extends Reducer<?, ?, ?, ?>> combinerClass,
+                           Class<? extends Partitioner<?, ?>> partitionerClass) {
+
+        if (mapperClass != null)
+		    setMapperClass(mapperClass);
+        else {
+            setMapperClass(Mapper.class);
+        }
+
 		if (reducerClass != null)
 			setReducerClass(reducerClass);
 
 		if (combinerClass != null)
 			setCombinerClass(combinerClass);
+
+		if (partitionerClass != null)
+			setPartitionerClass(partitionerClass);
 	}
 
 	/**
