@@ -147,8 +147,8 @@ public class Optimizedjob extends Job {
 		this.waitForCompletion(true);
 		long end = System.currentTimeMillis();
 
-		System.out.println(String.format("Runtime for Job %s: %d ms", jobName,
-				end - start));
+		System.out.println(String.format("Runtime for Job %s: %d minutes", jobName,
+				(end - start)/1000/60));
 
 	}
 }

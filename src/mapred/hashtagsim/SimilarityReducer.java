@@ -14,7 +14,8 @@ public class SimilarityReducer extends Reducer<Text, IntWritable, Text, IntWrita
 	protected void reduce(Text key, Iterable<IntWritable> value,
 			Context context)
 			throws IOException, InterruptedException {		
-		
+
+		/* Sum up the partial similarity scores to get the full score */
 		int similarity = 0;
 		for (IntWritable v : value) {
 			similarity += v.get();

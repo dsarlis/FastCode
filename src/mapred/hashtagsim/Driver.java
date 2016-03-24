@@ -24,9 +24,7 @@ public class Driver {
 	}
 
 	/**
-	 * Same as getJobFeatureVector, but this one actually computes feature
-	 * vector for all hashtags.
-	 * 
+	 * Calculates the feature vector for all words
 	 * @param input
 	 * @param output
 	 * @throws Exception
@@ -56,7 +54,7 @@ public class Driver {
     }
 
 	/**
-	 * 
+	 * Calculates the similarities for all hashtag pairs
 	 * @param input
 	 * @param output
 	 * @throws IOException

@@ -13,9 +13,6 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 public class SimilarityMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 
-	/**
-	 *
-	 */
 	@Override
 	protected void map(LongWritable key, Text value, Context context)
 			throws IOException, InterruptedException {
@@ -24,32 +21,38 @@ public class SimilarityMapper extends Mapper<LongWritable, Text, Text, IntWritab
 
 		List<HashtagCount> features = parseFeatureVector(wordFeatureVector[1]);
 
-		//for (int i = 0; i < features.size(); i++) {
-			HashtagCount firstHashtagCount = features.get(features.size()-1);
-			for (int j = features.size()-2; j >= 0; j--) {
-				HashtagCount secondHashtagCount = features.get(j);
-                String firstHashName = firstHashtagCount.getHashtag();
-                String secondHashName = secondHashtagCount.getHashtag();
-                String outKey;
+        /* Get the last element and traverse in reverse order to get the pairs
+         * The next key-value read from the mapper will generate the rest of the
+         * pairs from second to last element till the first one
+         */
+		HashtagCount firstHashtagCount = features.get(features.size()-1);
+		for (int j = features.size()-2; j >= 0; j--) {
+			HashtagCount secondHashtagCount = features.get(j);
+			String firstHashName = firstHashtagCount.getHashtag();
+			String secondHashName = secondHashtagCount.getHashtag();
+			String outKey;
 
-                if (secondHashName.compareTo(firstHashName) < 0) {
-                    outKey = secondHashName + " " + firstHashName;
-                } else {
-                    outKey = firstHashName + " " + secondHashName;
-                }
-
-				context.write(new Text(outKey),
-							  new IntWritable(firstHashtagCount.getCount() * secondHashtagCount.getCount()));
+            /* Create the pair in the same order, regardless of the order encountered */
+			if (secondHashName.compareTo(firstHashName) < 0) {
+				outKey = secondHashName + " " + firstHashName;
+			} else {
+				outKey = firstHashName + " " + secondHashName;
 			}
-		//}
+
+            /* Output the key and the partial similarity score for the hashtag pair
+             * considering the contribution of the input key (word)
+             */
+			context.write(new Text(outKey),
+					new IntWritable(firstHashtagCount.getCount() * secondHashtagCount.getCount()));
+		}
 	}
 
 	/**
 	 * De-serialize the feature vector into a map
 	 * 
 	 * @param featureVector
-	 *            The format is "word1:count1;word2:count2;...;wordN:countN;"
-	 * @return A HashMap, with key being each word and value being the count.
+	 *            The format is "hashtag1:count1;hashtag2:count2;...;hashtagN:countN;"
+	 * @return A HashMap, with key being each hashtag and value being the count.
 	 */
 	private List<HashtagCount> parseFeatureVector(String featureVector) {
 		List<HashtagCount> result = new ArrayList<HashtagCount>();
