@@ -30,9 +30,11 @@ public class HashtagReducer extends Reducer<Text, Text, Text, Text> {
 		 * hashtag1:count1;hashtag2:count2;...;hashtagN:countN;
 		 */
 		StringBuilder builder = new StringBuilder();
-		for (Map.Entry<String, Integer> entry : counts.entrySet())
+		for (Map.Entry<String, Integer> entry : counts.entrySet()) {
 			builder.append(entry.getKey()).append(":").append(entry.getValue()).append(";");
+			context.write(key, new Text(builder.toString()));
+		}
 		
-		context.write(key, new Text(builder.toString()));
+		//context.write(key, new Text(builder.toString()));
 	}
 }

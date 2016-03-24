@@ -24,9 +24,9 @@ public class SimilarityMapper extends Mapper<LongWritable, Text, Text, IntWritab
 
 		List<HashtagCount> features = parseFeatureVector(wordFeatureVector[1]);
 
-		for (int i = 0; i < features.size(); i++) {
-			HashtagCount firstHashtagCount = features.get(i);
-			for (int j = i+1; j < features.size(); j++) {
+		//for (int i = 0; i < features.size(); i++) {
+			HashtagCount firstHashtagCount = features.get(features.size()-1);
+			for (int j = features.size()-2; j >= 0; j--) {
 				HashtagCount secondHashtagCount = features.get(j);
 				String firstHashName = firstHashtagCount.getHashtag();
                 String secondHashName = secondHashtagCount.getHashtag();
@@ -41,7 +41,7 @@ public class SimilarityMapper extends Mapper<LongWritable, Text, Text, IntWritab
 				context.write(new Text(outKey),
 							  new IntWritable(firstHashtagCount.getCount() * secondHashtagCount.getCount()));
 			}
-		}
+		//}
 	}
 
 	/**
