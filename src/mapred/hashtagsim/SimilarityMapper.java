@@ -28,7 +28,7 @@ public class SimilarityMapper extends Mapper<LongWritable, Text, Text, IntWritab
 			HashtagCount firstHashtagCount = features.get(features.size()-1);
 			for (int j = features.size()-2; j >= 0; j--) {
 				HashtagCount secondHashtagCount = features.get(j);
-				String firstHashName = firstHashtagCount.getHashtag();
+                String firstHashName = firstHashtagCount.getHashtag();
                 String secondHashName = secondHashtagCount.getHashtag();
                 String outKey;
 

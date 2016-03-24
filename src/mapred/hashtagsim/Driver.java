@@ -66,7 +66,7 @@ public class Driver {
 	private static void getHashtagSimilarities(String input, String output) throws IOException,
 			ClassNotFoundException, InterruptedException {
 		Optimizedjob job = new Optimizedjob(new Configuration(), input, output,
-				"Get similarities between #job and all other hashtags");
+				"Get similarities between pairs of hashtags");
 		job.setClasses(SimilarityMapper.class, SimilarityReducer.class, SimilarityCombiner.class, null);
 		job.setMapOutputClasses(Text.class, IntWritable.class);
 		job.run();
