@@ -19,8 +19,8 @@ public class Driver {
 		String tmpdir = parser.get("tmpdir");
 
 		getWordFeatureVector(input, tmpdir + "/feature_vector");
-		distributeWordFeatureVector(tmpdir + "/feature_vector", tmpdir + "distributed_feature_vector");
-		getHashtagSimilarities(tmpdir + "/distributed_feature_vector", output);
+		//distributeWordFeatureVector(tmpdir + "/feature_vector", tmpdir + "distributed_feature_vector");
+		getHashtagSimilarities(tmpdir + "/feature_vector", output);
 	}
 
 	/**

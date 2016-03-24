@@ -25,7 +25,7 @@ public class HashtagMapper extends Mapper<LongWritable, Text, Text, Text> {
 			if (hashtag.startsWith("#")) {
 				for (String word : words) {
 					if (!word.startsWith("#")) {
-						context.write(new Text(word), new Text(hashtag + ";1"));
+						context.write(new Text(word), new Text(hashtag));
 					}
 				}
 			}

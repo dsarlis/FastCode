@@ -14,15 +14,14 @@ public class HashtagReducer extends Reducer<Text, Text, Text, Text> {
 		Map<String, Integer> counts = new HashMap<String, Integer>();
 
 		for (Text hashtag : value) {
-			String w = hashtag.toString();
-			String[] tokens = w.split(";");
-			Integer count = counts.get(tokens[0]);
+			String hashName = hashtag.toString();
+			Integer count = counts.get(hashName);
 
 			if (count == null) {
 				count = 0;
 			}
-			count += Integer.parseInt(tokens[1]);
-			counts.put(tokens[0], count);
+			count++;
+			counts.put(hashName, count);
 		}
 		
 		/*
