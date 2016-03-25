@@ -18,7 +18,7 @@ public class NgramCountMapper extends Mapper<LongWritable, Text, Text, NullWrita
 			throws IOException, InterruptedException {
 		String line = value.toString();
 		String[] tokens = Tokenizer.tokenize(line);
-		int ngramSize = context.getConfiguration().getInt("n", 5);
+		int n = context.getConfiguration().getInt("n", 5);
 		List<String> words = new ArrayList<String>();
 
 		for (String token : tokens) {
@@ -27,23 +27,21 @@ public class NgramCountMapper extends Mapper<LongWritable, Text, Text, NullWrita
 			}
 		}
 
-		for (int n = 1; n <= ngramSize; n++) {
-			for (int i = 0; i < words.size(); i++) {
-				StringBuilder builder = new StringBuilder();
-				boolean first = true;
+		for (int i = 0; i < words.size(); i++) {
+			StringBuilder builder = new StringBuilder();
+			boolean first = true;
 
-				for (int j = i; j < i + n && i + n <= words.size(); j++){
-					if (first) {
-						first = false;
-					} else {
-						builder.append(" ");
-					}
-					builder.append(words.get(j));
+			for (int j = i; j < i + n && i + n <= words.size(); j++){
+				if (first) {
+					first = false;
+				} else {
+					builder.append(" ");
 				}
+				builder.append(words.get(j));
+			}
 
-				if (i + n <= words.size()) {
-					context.write(new Text(builder.toString()), NullWritable.get());
-				}
+			if (i + n <= words.size()) {
+				context.write(new Text(builder.toString()), NullWritable.get());
 			}
 		}
 	}
