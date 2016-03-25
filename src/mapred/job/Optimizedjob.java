@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.compress.SnappyCodec;
 import org.apache.hadoop.mapred.ClusterStatus;
 import org.apache.hadoop.mapred.JobClient;
 import org.apache.hadoop.mapred.JobConf;
@@ -80,7 +81,8 @@ public class Optimizedjob extends Job {
 
 		setJobName(jobName);
 		setJarByClass(Optimizedjob.class);
-
+        job_conf.setCompressMapOutput(true);
+        job_conf.setMapOutputCompressorClass(SnappyCodec.class);
 	}
 
 	public void addInput(String input) {

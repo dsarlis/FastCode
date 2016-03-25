@@ -19,7 +19,6 @@ public class Driver {
 		String tmpdir = parser.get("tmpdir");
 
 		getWordFeatureVector(input, tmpdir + "/feature_vector");
-		//distributeWordFeatureVector(tmpdir + "/feature_vector", tmpdir + "distributed_feature_vector");
 		getHashtagSimilarities(tmpdir + "/feature_vector", output);
 	}
 
@@ -37,21 +36,6 @@ public class Driver {
 		job.setMapOutputClasses(Text.class, Text.class);
 		job.run();
 	}
-
-	/**
-	 *
-	 * @param input
-	 * @param output
-	 * @throws Exception
-	 */
-    private static void distributeWordFeatureVector(String input, String output)
-            throws Exception {
-        Optimizedjob job = new Optimizedjob(new Configuration(), input, output,
-                "Distribute feature vector");
-        job.setClasses(null, null, null, WordPartitioner.class);
-        job.setMapOutputClasses(Text.class, Text.class);
-        job.run();
-    }
 
 	/**
 	 * Calculates the similarities for all hashtag pairs
