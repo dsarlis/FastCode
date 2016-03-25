@@ -13,6 +13,7 @@ public class SimilarityCombiner extends Reducer<Text, IntWritable, Text, IntWrit
                           Context context)
             throws IOException, InterruptedException {
 
+        /* Sum up the partial similarity scores to get the full score */
         int similarity = 0;
         for (IntWritable v : value) {
             similarity += v.get();

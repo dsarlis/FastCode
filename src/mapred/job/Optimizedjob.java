@@ -81,6 +81,8 @@ public class Optimizedjob extends Job {
 
 		setJobName(jobName);
 		setJarByClass(Optimizedjob.class);
+
+        /* Compress intermediate map output to increase performance */
         job_conf.setCompressMapOutput(true);
         job_conf.setMapOutputCompressorClass(SnappyCodec.class);
 	}
