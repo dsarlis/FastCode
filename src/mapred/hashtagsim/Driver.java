@@ -32,7 +32,7 @@ public class Driver {
 			throws Exception {
 		Optimizedjob job = new Optimizedjob(new Configuration(), input, output,
 				"Get feature vector for all words");
-		job.setClasses(HashtagMapper.class, HashtagReducer.class, null, null);
+		job.setClasses(HashtagMapper.class, HashtagReducer.class, null);
 		job.setMapOutputClasses(Text.class, Text.class);
 		job.run();
 	}
@@ -49,7 +49,7 @@ public class Driver {
 			ClassNotFoundException, InterruptedException {
 		Optimizedjob job = new Optimizedjob(new Configuration(), input, output,
 				"Get similarities between pairs of hashtags");
-		job.setClasses(SimilarityMapper.class, SimilarityReducer.class, SimilarityCombiner.class, null);
+		job.setClasses(SimilarityMapper.class, SimilarityReducer.class, SimilarityCombiner.class);
 		job.setMapOutputClasses(Text.class, IntWritable.class);
 		job.run();
 	}

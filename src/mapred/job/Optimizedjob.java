@@ -107,8 +107,7 @@ public class Optimizedjob extends Job {
 	 */
 	public void setClasses(Class<? extends Mapper<?, ?, ?, ?>> mapperClass,
                            Class<? extends Reducer<?, ?, ?, ?>> reducerClass,
-                           Class<? extends Reducer<?, ?, ?, ?>> combinerClass,
-                           Class<? extends Partitioner<?, ?>> partitionerClass) {
+                           Class<? extends Reducer<?, ?, ?, ?>> combinerClass) {
 
         if (mapperClass != null)
 		    setMapperClass(mapperClass);
@@ -121,9 +120,6 @@ public class Optimizedjob extends Job {
 
 		if (combinerClass != null)
 			setCombinerClass(combinerClass);
-
-		if (partitionerClass != null)
-			setPartitionerClass(partitionerClass);
 	}
 
 	/**
