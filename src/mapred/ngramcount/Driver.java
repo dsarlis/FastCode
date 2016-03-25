@@ -27,7 +27,7 @@ public class Driver {
 		Optimizedjob job = new Optimizedjob(configuration, input, output,
 				"Compute NGram Count");
 
-		job.setClasses(NgramCountMapper.class, NgramCountReducer.class, null, null);
+		job.setClasses(NgramCountMapper.class, NgramCountReducer.class, null);
 		job.setMapOutputClasses(Text.class, NullWritable.class);
 
 		job.run();

@@ -3,6 +3,6 @@ Ant-Version: Apache Ant 1.9.3
 Created-By: 1.7.0_95-b00 (Oracle Corporation)
 Built-By: dimitris
 Main-Class: mapred.main.Entry
-Implementation-Version: 0.1-b2
-Built-Date: 2016-03-24 18:16:48
+Implementation-Version: 0.1-b4
+Built-Date: 2016-03-24 18:20:14
 
