@@ -1,5 +1,7 @@
 *.class
 
+# Intellij
+
 .idea
 *.iml
 
