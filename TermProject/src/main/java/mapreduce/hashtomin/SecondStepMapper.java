@@ -1,12 +1,11 @@
-package mapreduce;
+package mapreduce.hashtomin;
 
+import mapreduce.util.Constants;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SecondStepMapper extends Mapper<LongWritable, Text, Text, Text> {
 

@@ -1,5 +1,6 @@
-package mapreduce;
+package mapreduce.hashtomin;
 
+import mapreduce.util.Constants;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 

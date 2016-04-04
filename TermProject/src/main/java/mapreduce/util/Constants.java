@@ -1,4 +1,4 @@
-package mapreduce;
+package mapreduce.util;
 
 public class Constants {
 
