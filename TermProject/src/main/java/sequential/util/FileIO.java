@@ -1,4 +1,4 @@
-package sequential;
+package sequential.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,17 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Driver {
-
-    public static void main(String[] args) {
-        Driver driver = new Driver();
-        List<Integer>[] g = driver.readGraph(Driver.class.getResourceAsStream("/simple_graph"));
-        List<List<Integer>> components = new ConnectedComponents().findConnectedComponents(g);
-
-        System.out.println(components);
-    }
-
-    private List<Integer>[]  readGraph(InputStream inputStream) {
+public class FileIO {
+    public static List<Integer>[]  readGraph(InputStream inputStream) {
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))) {
             Map<Integer, List<Integer>> dynamicSizeGraph = new HashMap<Integer, List<Integer>>();
             String line = null;
@@ -42,5 +33,4 @@ public class Driver {
             throw new RuntimeException(ex);
         }
     }
-
 }

@@ -1,4 +1,4 @@
-package mapreduce.main;
+package mapreduce.hashtomin;
 
 import mapreduce.hashtomin.FirstStepMapper;
 import mapreduce.hashtomin.FirstStepReducer;
@@ -9,7 +9,7 @@ import mapreduce.util.SimpleParser;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.Text;
 
-public class ConnectedComponentsJob {
+public class Driver {
 
     public static void main(String[] args) throws Exception {
         SimpleParser parser = new SimpleParser(args);
