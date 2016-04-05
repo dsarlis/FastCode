@@ -17,14 +17,14 @@ public class FileIO {
     public static Graph readGraph(InputStream inputStream) {
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))) {
             Map<Integer, List<Integer>> dynamicSizeGraph = new HashMap<Integer, List<Integer>>();
-            Map<Integer, Integer> mapping = new HashMap<Integer, Integer>();
+            Map<String, Integer> mapping = new HashMap<String, Integer>();
             String line = null;
             int nodeCounter = 0;
 
             while ((line = bufferedReader.readLine()) != null) {
                 String[] edge = line.split("\\s+");
-                int from = Integer.parseInt(edge[0]);
-                int to = Integer.parseInt(edge[1]);
+                String from = edge[0];
+                String to = edge[1];
 
                 if (!mapping.containsKey(from)) {
                     mapping.put(from, nodeCounter++);
@@ -36,12 +36,17 @@ public class FileIO {
 
                 neighbors.add(mapping.get(to));
             }
-            List<Integer>[] graph  = new List[dynamicSizeGraph.size()];
-            int[] invertedMapping = new int[graph.length];
+            List<Integer>[] graph  = new List[nodeCounter];
+            Map<Integer, String> invertedMapping = new HashMap<Integer, String>();
 
             graph = dynamicSizeGraph.values().toArray(graph);
-            for (Map.Entry<Integer, Integer> entry: mapping.entrySet()) {
-                invertedMapping[entry.getValue()] = entry.getKey();
+            for (int i = 0; i < nodeCounter; i++) {
+                if (graph[i] == null) {
+                    graph[i] = new ArrayList<Integer>();
+                }
+            }
+            for (Map.Entry<String, Integer> entry: mapping.entrySet()) {
+                invertedMapping.put(entry.getValue(), entry.getKey());
             }
             return new Graph(graph, invertedMapping);
         } catch (IOException ex) {

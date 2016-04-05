@@ -1,13 +1,14 @@
 package sequential.main;
 
 import java.util.List;
+import java.util.Map;
 
 public class Graph {
 
     private List<Integer>[] graph;
-    int[] mapping;
+    Map<Integer, String> mapping;
 
-    public Graph(List<Integer>[] graph, int[] mapping) {
+    public Graph(List<Integer>[] graph, Map<Integer, String> mapping) {
         this.graph = graph;
         this.mapping = mapping;
     }
@@ -16,7 +17,7 @@ public class Graph {
         return graph;
     }
 
-    public int[] getMapping() {
+    public Map<Integer, String> getMapping() {
         return mapping;
     }
 

@@ -14,9 +14,16 @@ import java.util.Map;
 public class Driver {
 
     public static void main(String[] args) {
-        Graph g = FileIO.readGraph(Driver.class.getResourceAsStream("/medium_graph"));
-        List<List<Integer>> components = new ConnectedComponents().findConnectedComponents(g);
+        long start = System.currentTimeMillis();
+        Graph g = FileIO.readGraph(Driver.class.getResourceAsStream("/gplus_combined.txt"));
+        long end = System.currentTimeMillis();
 
+        System.out.println(String.format("Parsing time: %d minutes", (end - start)/1000/60));
+        start = System.currentTimeMillis();
+        List<List<String>> components = new ConnectedComponents().findConnectedComponents(g);
+        end = System.currentTimeMillis();
+
+        System.out.println(String.format("Runtime for program sequential: %d minutes", (end - start)/1000/60));
         System.out.println(components);
     }
 

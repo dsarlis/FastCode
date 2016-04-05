@@ -8,19 +8,19 @@ public class ConnectedComponents {
     private Stack<Integer> stack;
     private int time;
     private int[] lowlink;
-    private int[] mapping;
-    private List<List<Integer>> components;
+    private Map<Integer, String> mapping;
+    private List<List<String>> components;
 
-    public List<List<Integer>> findConnectedComponents(Graph g) {
+    public List<List<String>> findConnectedComponents(Graph g) {
         graph = g.getGraph();
         mapping = g.getMapping();
-        int n = mapping.length;
+        int n = mapping.size();
 
         visited = new boolean[n];
         stack = new Stack<>();
         time = 0;
         lowlink = new int[n];
-        components = new ArrayList<List<Integer>>();
+        components = new ArrayList<List<String>>();
         for (int u = 0; u < n; u++) {
             if (!visited[u]) {
                 dfs(u);
@@ -45,10 +45,10 @@ public class ConnectedComponents {
         }
 
         if (isComponentRoot) {
-            List<Integer> component = new ArrayList<>();
+            List<String> component = new ArrayList<String>();
             while (true) {
                 int x = stack.pop();
-                component.add(mapping[x]);
+                component.add(mapping.get(x));
                 lowlink[x] = Integer.MAX_VALUE;
                 if (x == u)
                     break;
