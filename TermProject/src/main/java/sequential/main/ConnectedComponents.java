@@ -1,9 +1,5 @@
 package sequential.main;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.*;
 
 public class ConnectedComponents {
@@ -12,21 +8,24 @@ public class ConnectedComponents {
     private Stack<Integer> stack;
     private int time;
     private int[] lowlink;
+    private int[] mapping;
     private List<List<Integer>> components;
 
-    public List<List<Integer>> findConnectedComponents(List<Integer>[] graph) {
-        int n = graph.length;
-        this.graph = graph;
+    public List<List<Integer>> findConnectedComponents(Graph g) {
+        graph = g.getGraph();
+        mapping = g.getMapping();
+        int n = mapping.length;
+
         visited = new boolean[n];
         stack = new Stack<>();
         time = 0;
         lowlink = new int[n];
-        components = new ArrayList<>();
-
-        for (int u = 0; u < n; u++)
-            if (!visited[u])
+        components = new ArrayList<List<Integer>>();
+        for (int u = 0; u < n; u++) {
+            if (!visited[u]) {
                 dfs(u);
-
+            }
+        }
         return components;
     }
 
@@ -49,7 +48,7 @@ public class ConnectedComponents {
             List<Integer> component = new ArrayList<>();
             while (true) {
                 int x = stack.pop();
-                component.add(x);
+                component.add(mapping[x]);
                 lowlink[x] = Integer.MAX_VALUE;
                 if (x == u)
                     break;
