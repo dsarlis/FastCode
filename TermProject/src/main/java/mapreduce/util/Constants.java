@@ -2,7 +2,7 @@ package mapreduce.util;
 
 public class Constants {
 
-    public static enum UpdateCounter {
+    public enum UpdateCounter {
         UPDATED
     }
 

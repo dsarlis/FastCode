@@ -11,8 +11,13 @@
     <dependencies>
         <dependency>
             <groupId>org.apache.hadoop</groupId>
-            <artifactId>hadoop-core</artifactId>
-            <version>1.1.0</version>
+            <artifactId>hadoop-common</artifactId>
+            <version>2.7.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-client</artifactId>
+            <version>2.7.2</version>
         </dependency>
     </dependencies>
 
@@ -59,7 +64,23 @@
                             <finalName>sequential</finalName>
                             <archive>
                                 <manifest>
-                                    <mainClass></mainClass>
+                                    <mainClass>sequential.main.Driver</mainClass>
+                                </manifest>
+                            </archive>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>mapreduce</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>mapreduce</finalName>
+                            <archive>
+                                <manifest>
+                                    <mainClass>mapreduce.main.Entry</mainClass>
                                 </manifest>
                             </archive>
                         </configuration>

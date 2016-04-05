@@ -13,7 +13,7 @@ import java.util.Set;
 public class SecondStepReducer extends Reducer<Text, Text, Text, Text> {
 
     @Override
-    protected void reduce(Text v, Iterable<Text> Cvs, Context context)
+    protected void reduce(Text node, Iterable<Text> Cvs, Context context)
             throws IOException, InterruptedException {
         Set<String> mergedCluster = new HashSet<String>();
         int maxSize = 0;
@@ -43,7 +43,8 @@ public class SecondStepReducer extends Reducer<Text, Text, Text, Text> {
             context.getCounter(Constants.UpdateCounter.UPDATED).increment(1);
         }
         //Emit (v, merged Cvs)
-        context.write(v, new Text(builder.toString()));
+        System.out.println("Node: " + node + " Cluster: " + builder.toString());
+        context.write(node, new Text(builder.toString()));
     }
 
 }

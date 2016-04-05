@@ -5,6 +5,7 @@ import java.net.URI;
 import java.util.LinkedList;
 import java.util.List;
 
+import mapreduce.util.Constants;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -136,7 +137,7 @@ public class Optimizedjob extends Job {
      * @throws InterruptedException
      * @throws ClassNotFoundException
      */
-    public void run() throws IOException, InterruptedException,
+    public long run(boolean checkCounter) throws IOException, InterruptedException,
             ClassNotFoundException {
         setup();
 
@@ -147,5 +148,6 @@ public class Optimizedjob extends Job {
         System.out.println(String.format("Runtime for Job %s: %d minutes", jobName,
                 (end - start)/1000/60));
 
+        return checkCounter ? this.getCounters().findCounter(Constants.UpdateCounter.UPDATED).getValue() : 0;
     }
 }

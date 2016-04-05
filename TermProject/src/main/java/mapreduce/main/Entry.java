@@ -12,7 +12,7 @@ public class Entry {
 
         long start = System.currentTimeMillis();
 
-        if (program.equals("hashtagsim"))
+        if (program.equals("hashtomin"))
             mapreduce.hashtomin.Driver.main(args);
         else {
             System.out.println("Unknown program!");

@@ -14,7 +14,7 @@ import java.util.Map;
 public class Driver {
 
     public static void main(String[] args) {
-        List<Integer>[] g = FileIO.readGraph(Driver.class.getResourceAsStream("/simple_graph"));
+        List<Integer>[] g = FileIO.readGraph(Driver.class.getResourceAsStream("/medium_graph"));
         List<List<Integer>> components = new ConnectedComponents().findConnectedComponents(g);
 
         System.out.println(components);

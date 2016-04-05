@@ -17,6 +17,9 @@ public class FirstStepReducer extends Reducer<Text, Text, Text, Text> {
         for (Text v : value) {
             builder.append(Constants.CLUSTER_SEPARATOR).append(v.toString());
         }
+
+        System.out.println("First Reducer output: " + builder.toString());
+
         //Emit (node, {node} U node_neighbors)
         context.write(key, new Text(builder.toString()));
     }

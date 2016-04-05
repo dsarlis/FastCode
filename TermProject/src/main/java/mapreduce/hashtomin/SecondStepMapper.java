@@ -10,8 +10,9 @@ import java.io.IOException;
 public class SecondStepMapper extends Mapper<LongWritable, Text, Text, Text> {
 
     @Override
-    protected void map(LongWritable v, Text Cv, Context context) throws IOException, InterruptedException {
-        String[] CvNodes  = Cv.toString().split(Constants.CLUSTER_SEPARATOR);
+    protected void map(LongWritable v, Text value, Context context) throws IOException, InterruptedException {
+        String[] parts = value.toString().split(Constants.SPACE_REGEX);
+        String[] CvNodes  = parts[1].toString().split(Constants.CLUSTER_SEPARATOR);
         int VminValue = Integer.MAX_VALUE;
 
         for (String u: CvNodes) {
@@ -28,7 +29,7 @@ public class SecondStepMapper extends Mapper<LongWritable, Text, Text, Text> {
             context.write(new Text(u), new Text(Vmin));
         }
         //Emit (Vmin, Cv)
-        context.write(new Text(Vmin), Cv);
+        context.write(new Text(Vmin), new Text(parts[1]));
     }
 
 }
