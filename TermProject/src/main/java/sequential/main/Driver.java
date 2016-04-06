@@ -15,16 +15,16 @@ public class Driver {
 
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
-        Graph g = FileIO.readGraph(Driver.class.getResourceAsStream("/gplus_combined.txt"));
+        Graph g = FileIO.readGraph(Driver.class.getResourceAsStream("/soc-pokec-profiles.txt"));
         long end = System.currentTimeMillis();
 
-        System.out.println(String.format("Parsing time: %d minutes", (end - start)/1000/60));
+        System.out.println(String.format("Parsing time: %d seconds", (end - start)/1000));
         start = System.currentTimeMillis();
         List<List<String>> components = new ConnectedComponents().findConnectedComponents(g);
         end = System.currentTimeMillis();
 
-        System.out.println(String.format("Runtime for program sequential: %d minutes", (end - start)/1000/60));
-        System.out.println(components);
+        System.out.println(String.format("Runtime for program sequential: %d seconds", (end - start)/1000));
+        System.out.println(String.format("Result: %d components", components.size()));
     }
 
 }

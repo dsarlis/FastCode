@@ -22,6 +22,9 @@ public class FileIO {
             int nodeCounter = 0;
 
             while ((line = bufferedReader.readLine()) != null) {
+                if (line.startsWith("#")) {
+                    continue;
+                }
                 String[] edge = line.split("\\s+");
                 String from = edge[0];
                 String to = edge[1];
