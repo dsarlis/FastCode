@@ -1,4 +1,4 @@
-package mapreduce.hashtomin;
+package mapreduce.common;
 
 public class Test {
 
