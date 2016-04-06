@@ -30,7 +30,6 @@ public class SimpleParser {
         } catch (ParseException e) {
             System.err.println("Option value for " + option + " is not found.");
             System.exit(1);
-            //e.printStackTrace();
         }
 
         return value;
@@ -59,6 +58,7 @@ public class SimpleParser {
         }
 
     }
+
     /**
      * Example usage
      */
