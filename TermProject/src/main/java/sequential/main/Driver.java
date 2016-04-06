@@ -9,10 +9,9 @@ import sequential.util.FileIO;
 public class Driver {
 
 	public static void main(String[] args) {
-
-		long start = System.nanoTime();
-		Graph graph = FileIO.readGraph(Driver.class.getResourceAsStream("/simple_graph"));
-		long end = System.nanoTime();
+		long start = System.currentTimeMillis();
+		Graph graph = FileIO.readGraph(Driver.class.getResourceAsStream("/" + args[0]));
+		long end = System.currentTimeMillis();
 
 		System.out.println(String.format("Parsing time: %d nano-seconds", end - start));
 		start = System.currentTimeMillis();

@@ -7,29 +7,28 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 
-public class SecondStepMapper extends Mapper<LongWritable, Text, Text, Text> {
+public class HashToMinMapper extends Mapper<LongWritable, Text, Text, Text> {
 
     @Override
     protected void map(LongWritable v, Text value, Context context) throws IOException, InterruptedException {
         String[] parts = value.toString().split(Constants.SPACE_REGEX);
-        String[] CvNodes  = parts[1].toString().split(Constants.CLUSTER_SEPARATOR);
-        int VminValue = Integer.MAX_VALUE;
+        String Cv = parts[1];
+        String[] CvNodes  = Cv.split(Constants.CLUSTER_SEPARATOR);
+        String Vmin = CvNodes[0];
 
-        for (String u: CvNodes) {
-            int node = Integer.parseInt(u);
+        for (int i = 1; i < CvNodes.length; i++) {
+            String node = CvNodes[i];
 
-            if (node < VminValue) {
-                VminValue = node;
+            if (node.compareTo(Vmin) < 0) {
+                Vmin = node;
             }
         }
-        String Vmin = String.format("%d", VminValue);
-
         for (String u: CvNodes) {
             //Emit (u, {Vmin})
             context.write(new Text(u), new Text(Vmin));
         }
         //Emit (Vmin, Cv)
-        context.write(new Text(Vmin), new Text(parts[1]));
+        context.write(new Text(Vmin), new Text(Cv));
     }
 
 }
