@@ -19,4 +19,13 @@ hs_err_pid*
 # target folder
 */target
 
+# latex files
+*.aux
+*.bbl
+*.blg
+*.log
+*.pdf
+*.synctex.gz
+
+# graphs
 gplus_combined.txt
