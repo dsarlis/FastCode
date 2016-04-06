@@ -15,7 +15,7 @@ public class Driver {
 
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
-        Graph g = FileIO.readGraph(Driver.class.getResourceAsStream("/soc-pokec-profiles.txt"));
+        Graph g = FileIO.readGraph(Driver.class.getResourceAsStream("/" + args[0]));
         long end = System.currentTimeMillis();
 
         System.out.println(String.format("Parsing time: %d seconds", (end - start)/1000));

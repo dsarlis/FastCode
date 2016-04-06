@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-public class SecondStepReducer extends Reducer<Text, Text, Text, Text> {
+public class MergeReducer extends Reducer<Text, Text, Text, Text> {
 
     @Override
     protected void reduce(Text node, Iterable<Text> Cvs, Context context)

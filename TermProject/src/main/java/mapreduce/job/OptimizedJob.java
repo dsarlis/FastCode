@@ -26,7 +26,7 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
  * available reducers.
  *
  */
-public class Optimizedjob extends Job {
+public class OptimizedJob extends Job {
 
     private List<String> inputs;
 
@@ -36,7 +36,7 @@ public class Optimizedjob extends Job {
 
     private int reduceJobs;
 
-    public Optimizedjob(Configuration conf, String input, String output,
+    public OptimizedJob(Configuration conf, String input, String output,
                         String jobName) throws IOException {
         super(conf);
 
@@ -78,7 +78,7 @@ public class Optimizedjob extends Job {
             setNumReduceTasks(reduceJobs);
 
         setJobName(jobName);
-        setJarByClass(Optimizedjob.class);
+        setJarByClass(OptimizedJob.class);
 
         /* Compress intermediate map output to increase performance */
         job_conf.setCompressMapOutput(true);
