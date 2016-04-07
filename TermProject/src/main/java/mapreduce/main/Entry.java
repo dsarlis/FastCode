@@ -15,11 +15,11 @@ public class Entry {
 
         long start = System.currentTimeMillis();
 
-        if (program.equals("hashtomin"))
+        if (program.equals("hashToMin"))
             Driver.main(args, HashToMinMapper.class);
-        else if (program.equals("hashtoall")) {
+        else if (program.equals("hashToAll")) {
             Driver.main(args, HashToAllMapper.class);
-        } else if (program.equals("hashToGreaterMin")) {
+        } else if (program.equals("hashGreaterToMin")) {
             Driver.main(args, HashGreaterToMinMapper.class);
         }
         else {
