@@ -1,4 +1,4 @@
-package mapreduce.hashtomin;
+package mapreduce.strategy;
 
 import mapreduce.util.Constants;
 import org.apache.hadoop.io.LongWritable;

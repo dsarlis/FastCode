@@ -1,31 +1,23 @@
-package mapreduce.hashtomin;
+package mapreduce.main;
 
+import mapreduce.common.FirstStepMapper;
+import mapreduce.common.FirstStepReducer;
+import mapreduce.common.MergeReducer;
 import mapreduce.job.OptimizedJob;
-import mapreduce.main.HashStrategy;
 import mapreduce.util.SimpleParser;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.Text;
 
+import java.io.IOException;
+
 
 public class Driver {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args, Class c) throws Exception {
         SimpleParser parser = new SimpleParser(args);
         String input = parser.get("input");
         String tmpDir = parser.get("tmpdir");
-        String program = parser.get("program");
-        HashStrategy hashStrategy = null;
 
-        if (program.equals("hashtoall")) {
-            hashStrategy = new HashStrategy<HashToAllMapper>(HashToAllMapper.class);
-        } else if (program.equals("hashtoall")) {
-            hashStrategy = new HashStrategy<HashToMinMapper>(HashToMinMapper.class);
-        } else if (program.equals("hashtoall")) {
-            hashStrategy = new HashStrategy<HashGreaterToMinMapper>(HashGreaterToMinMapper.class);
-        } else {
-            System.err.println("Invalid program option.");
-            System.exit(1);
-        }
         createClusters(input, tmpDir + "/clusters");
         input = tmpDir + "/clusters";
         long counter = 1;
@@ -33,7 +25,7 @@ public class Driver {
 
         while (counter > 0) {
             String output = parser.get("output") + iteration;
-            counter = hashStrategy.hashStep(input, output);
+            counter = hashStep(input, output, c);
             input = output;
             iteration++;
         }
@@ -47,4 +39,13 @@ public class Driver {
         job.run(false);
     }
 
+    private static long hashStep(String input, String output, Class c)
+            throws InterruptedException, IOException, ClassNotFoundException {
+        OptimizedJob job = new OptimizedJob(new Configuration(), input, output,
+                String.format("%s job", c.getSimpleName()));
+        job.setClasses(c, MergeReducer.class, null);
+        job.setMapOutputClasses(Text.class, Text.class);
+
+        return job.run(true);
+    }
 }
