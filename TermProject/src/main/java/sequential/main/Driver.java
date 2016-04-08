@@ -1,5 +1,7 @@
 package sequential.main;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import sequential.model.ConnectedComponents;
@@ -8,9 +10,9 @@ import sequential.util.FileIO;
 
 public class Driver {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
 		long start = System.currentTimeMillis();
-		Graph graph = FileIO.readGraph(Driver.class.getResourceAsStream("/" + args[0]));
+		Graph graph = FileIO.readGraph(new FileInputStream(args[0]));
 		long end = System.currentTimeMillis();
 
 		System.out.println(String.format("Parsing time: %d nano-seconds", end - start));

@@ -58,8 +58,8 @@ public class FileIO {
 
 			result = new Graph(graph, invertedMapping);
 
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (IOException ex) {
+			throw new RuntimeException(ex);
 		}
 
 		return result;
