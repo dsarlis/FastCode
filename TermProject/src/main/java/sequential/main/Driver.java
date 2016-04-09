@@ -15,14 +15,14 @@ public class Driver {
 		Graph graph = FileIO.readGraph(new FileInputStream(args[0]));
 		long end = System.currentTimeMillis();
 
-		System.out.println(String.format("Parsing time: %d nano-seconds", end - start));
+		System.out.println(String.format("Parsing time: %d milli-seconds", end - start));
 		start = System.currentTimeMillis();
 		List<List<String>> components = new ConnectedComponents(graph).findConnectedComponents();
 		end = System.currentTimeMillis();
 
-		System.out.println(components);
+//		System.out.println(components);
 
-		System.out.println(String.format("Runtime for program sequential: %d nano-econds", end - start));
+		System.out.println(String.format("Runtime for program sequential: %d milli-seconds", end - start));
 		System.out.println(String.format("Result: %d components", components.size()));
 	}
 
