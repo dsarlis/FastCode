@@ -1,0 +1,80 @@
+\subsection{Graphs}
+
+We used different graph files to measure the Sequential and MapRedude performace. The following table describe each one of them:
+
+\begin{table}[h!]
+\footnotesize
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+{\bf Name} & {\bf Nodes}& {\bf Edges} & {\bf Size}\\
+\hline
+\hline
+simple\_graph   & 10  & 14  & 55 bytes  \\
+\hline
+medium\_graph   & -  & -  & 96.2 Kb  \\
+\hline
+ego-Facebook   & 4039  & 88234  & 854.4 Kb  \\
+\hline
+ego-Gplus   & 107614  & 13673453  & 1.2GB  \\
+\hline
+big\_graph   & -  & -  & 2.4GB  \\
+\hline
+\end{tabular}
+\caption{Graphs}
+\label{tb:graphfiles}
+\end{center}
+\end{table}
+
+\subsection{Sequential}
+We used an implementation of Tarjan\'s Algorithm that has $O(\mid V \mid + \mid E \mid)$ worst case performance. It uses a DFS keeping the time of the nodes beign first discovered and the order of oldest ancestor it can reach. It begins at an arbitrary node and  visits every node of the graph exactly once. As it is going through the graph it will be generating the different connected components.
+
+\begin{table}[h!]
+\footnotesize
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+{\bf Graph} & {\bf Time (nanoseconds)}& {\bf \# of components} \\
+\hline
+\hline
+simple\_graph   & 0  & 3  \\
+\hline
+medium\_graph   & 4  & 2   \\
+\hline
+ego-Facebook   & 11  & 1325  \\
+\hline
+ego-Gplus   & 812 & 37249 \\
+\hline
+big\_graph   & -  & -  \\
+\hline
+\end{tabular}
+\caption{Sequential times}
+\label{tb:sequentialtimes}
+\end{center}
+\end{table}
+
+\subsection{MapReduce}
+
+\begin{table}[h!]
+\footnotesize
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+{\bf Graph} & {\bf Time (nanoseconds)}& {\bf \# of components} \\
+\hline
+\hline
+simple\_graph   & -  & -  \\
+\hline
+medium\_graph   & -  & -   \\
+\hline
+ego-Facebook   & -  & -  \\
+\hline
+ego-Gplus   & -  & -\\
+\hline
+big\_graph   & -  & -  \\
+\hline
+\end{tabular}
+\caption{MapReduce times}
+\label{tb:mapreducetimes}
+\end{center}
+\end{table}
