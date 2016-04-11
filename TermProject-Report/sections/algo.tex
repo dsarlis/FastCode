@@ -1,7 +1,7 @@
-The analysis that follows for both the sequential and MapReduce parts assumes a graph G that can be formalized as $G=(V,E)$ where $V$ is the set of vertices in the graph labeled from $0 \to N-1$ where $N=|V|$ and $E$ is the edges set, which is a set of of 2-element subsets in $V$, that is $E \subseteq \{\{u,v\}: \in V\}$.
+The analysis that follows for both the sequential and Map-Reduce parts assumes a graph G that can be formalized as $G=(V,E)$ where $V$ is the set of vertices in the graph labeled from $0 \to N-1$ where $N=|V|$ and $E$ is the edges set, which is a set of of 2-element subsets in $V$, that is $E \subseteq \{\{u,v\}: \in V\}$.
 
 \subsection{Sequential}
-A sequential algorithm of calculating connected components is used as a proof of concept to show the differences in performance when using MapReduce and compare when to use one approach over the other.
+A sequential algorithm of calculating connected components is used as a proof of concept to show the differences in performance when using Map-Reduce and compare when to use one approach over the other.
 
 We chose to implement a variation of Tarjan's algorithm to find strongly connected components. Although this algorithm calculates strongly connected components in directed graphs, it can be used to find connected components in undirected graphs as well. Algorithm \ref{algo:tarjan} provides the pseudocode of our implementation. It is based on \cite{tarjan}.
 
@@ -38,19 +38,19 @@ We chose to implement a variation of Tarjan's algorithm to find strongly connect
 	\end{algorithmic}
 \end{algorithm}
 
-The algorithm's complexity is linear in the number of edges and nodes in the graph, \ie $O(|V| + |E|)$. This means that the algorithm will be very efficient for relatively small graphs, but it will start being uneffective while the graphs grow bigger and bigger up to hundreds of million vertices and edges. In particular, the parsing time of the input file would be the bottleneck since it has to be done sequentially as well as the available memory on the machine we are using, since the graph has to fit in its memory for Algorithm \ref{algo:tarjan} to work. MapReduce helps to eliminate exactly these restrictions, since the parsing can be performed in parallel in addition to running the actual connected components algorithm in a parallel fashion.
+The algorithm's complexity is linear in the number of edges and nodes in the graph, \ie $O(|V| + |E|)$. This means that the algorithm will be very efficient for relatively small graphs, but it will start being uneffective while the graphs grow bigger and bigger up to hundreds of million vertices and edges. In particular, the parsing time of the input file would be the bottleneck since it has to be done sequentially as well as the available memory on the machine we are using, since the graph has to fit in its memory for Algorithm \ref{algo:tarjan} to work. Map-Reduce helps to eliminate exactly these restrictions, since the parsing can be performed in parallel in addition to running the actual connected components algorithm in a parallel fashion.
 
-\subsection{Map Reduce}
+\subsection{Map-Reduce}
 
-Two algorithm versions were implemented: Hast-to-All and Hash-to-Min. Both follow the same workflow:
+The algorithm that we chose for the Map-Reduce part is based on the Hash-to-Min algorithm introduced in \cite{rastogi}. This algorithm works in multiple Map-Reduce rounds logarithmic
 
 \begin{algorithm}
 \caption{Workflow}
 \label{algo:workflow}
+\State Emit $(u, C_u) \in h(C_ v)$
 \begin{algorithmic}[1]
 \State Initialize $C_{v}$ = ${v} \cup nbrs(v)$ for every $v \in V$
 \Repeat
-\State Emit $(u, C_u) \in h(C_ v)$
 \State Merge $\bigcup C_v$ from $(v, C_v)$
 \Until{$C_v does$ not change for all $v$}
 \end{algorithmic}
