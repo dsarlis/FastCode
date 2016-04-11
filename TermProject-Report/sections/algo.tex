@@ -1,4 +1,16 @@
 \subsection{Sequential}
+A sequential algorithm of calculating connected components is used as a proof of concept to show the differences in performance when using MapReduce and compare when to use one approach over the other.
+
+We chose to implement a variation of Tarjan's algorithm to find strongly connected components. Although this algorithm calculates strongly connected components in directed graphs, it can be used to find connected components in undirected graphs as well. Algorithm \ref{algo:tarjan} provides the pseudocode of our implementation. It is based on \cite{tarjan}.
+
+\begin{algorithm}
+	\caption{Tarjan's algorithm}
+	\label{algo:tarjan}
+	\begin{algorithmic}[1]
+		\State Initialize graph
+	\end{algorithmic}
+\end{algorithm}
+
 
 \subsection{Map Reduce}
 
