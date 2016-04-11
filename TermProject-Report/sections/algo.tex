@@ -49,10 +49,15 @@ The algorithm that we chose for the Map-Reduce part is based on the Hash-to-Min 
 	\label{algo:first_step}
 	\begin{algorithmic}[1]
 		\Function{Map}{$key, value$}
-			\State
+			\State $edge = value.split() $
+			\State $emit(edge[0], edge[1])$
 		\EndFunction
 		\Function{Reduce}{$key, List<value>$}
-			\State
+			\State $outKey = new StringBuilder()$
+			\For {$value \in List<value>$}
+				\State $outKey.append(clusterSeparator).append(value)$
+			\EndFor
+			\State $emit(key, outKey)$
 		\EndFunction
 	\end{algorithmic}
 \end{algorithm}
@@ -62,10 +67,28 @@ The algorithm that we chose for the Map-Reduce part is based on the Hash-to-Min 
 	\label{algo:second_step}
 	\begin{algorithmic}[1]
 		\Function{Map}{$key, value$}
-			\State
+			\State $clusterNodes = parse(value)$
+			\State $clusterNodes = cluster.split(clusterSeparator)$
+			\State $v_{min} = min(node \in clusterNodes)$
+			\For {$u \in clusterNodes$}
+				\State $emit(u, u_{min})$
+			\EndFor
+			\State $emit(u_{min}, cluster)$
 		\EndFunction
 		\Function{Reduce}{$key, List<value>$}
-			\State
+			\State Initialize mergedCluster, maxSize
+			\For {$C_v \in List<value>$}
+				\State $elementsC_v = C_v.split(clusterSeparator)$
+				\If {$elementsC_v.length > maxSize$}
+					\State $maxSize = elementsC_v.length$ 
+				\EndIf
+				\State $mergedCluster.add(elementsC_v)$
+			\EndFor
+			\State $cluster = mergedCluster.toString()$
+			\If {$maxSize < mergedCluster$}
+				\State $context.counter++$
+			\EndIf
+			\State $emit(key, cluster)$
 		\EndFunction
 	\end{algorithmic}
 \end{algorithm}
