@@ -15,7 +15,6 @@ public class FirstStepMapper extends Mapper<LongWritable, Text, Text, Text> {
         String[] edge = line.split(Constants.SPACE_REGEX);
 
         //Emits (node_from, node_to)
-        System.out.println("First vertex: " + edge[0] + " second vertex: " + edge[1]);
         context.write(new Text(edge[0]), new Text(edge[1]));
     }
 

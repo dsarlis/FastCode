@@ -43,7 +43,6 @@ public class MergeReducer extends Reducer<Text, Text, Text, Text> {
             context.getCounter(Constants.UpdateCounter.UPDATED).increment(1);
         }
         //Emit (v, merged Cvs)
-        System.out.println("Node: " + node + " Cluster: " + builder.toString());
         context.write(node, new Text(builder.toString()));
     }
 

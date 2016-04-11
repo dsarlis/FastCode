@@ -1,10 +1,5 @@
 package mapreduce.job;
 
-import java.io.IOException;
-import java.net.URI;
-import java.util.LinkedList;
-import java.util.List;
-
 import mapreduce.util.Constants;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -18,6 +13,11 @@ import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
+
+import java.io.IOException;
+import java.net.URI;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * A simplified interface of the original Job class.
@@ -145,8 +145,8 @@ public class OptimizedJob extends Job {
         this.waitForCompletion(true);
         long end = System.currentTimeMillis();
 
-        System.out.println(String.format("Runtime for Job %s: %d minutes", jobName,
-                (end - start)/1000/60));
+        System.out.println(String.format("Runtime for Job %s: %d seconds", jobName,
+                (end - start)/1000));
 
         return checkCounter ? this.getCounters().findCounter(Constants.UpdateCounter.UPDATED).getValue() : 0;
     }

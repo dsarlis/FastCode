@@ -43,14 +43,14 @@ big\_graph   & -  & -  & 2.4GB  \\
 \end{table}
 
 \subsection{Sequential}
-We used an implementation of Tarjan's Algorithm that has $O(|V| + |E|)$ worst case performance. It uses a Depth-First-Approach (DFS) as described in Section \sec{sec:algo}. It begins at an arbitrary node and  visits every node of the graph exactly once. As it is going through the graph it will be generating the various connected components.
+We used an implementation of Tarjan's Algorithm that has $O(|V| + |E|)$ worst case performance. It uses a Depth-First-Approach (DFS) as described in Section \ref{sec:algo}. It begins at an arbitrary node and  visits every node of the graph exactly once. As it is going through the graph it will be generating the various connected components.
 
 \begin{table}[!h]
 \footnotesize
 \begin{center}
 \begin{tabular}{|c|c|c|}
 \hline
-{\bf Graph} & {\bf Time (milliseconds)}& {\bf \# of components} \\
+{\bf Graph} & {\bf Time (milliseconds)}& {\bf components \#} \\
 \hline
 \hline
 simple\_graph   & 0  & 3  \\
@@ -69,12 +69,12 @@ big\_graph   & -  & -  \\
 \end{center}
 \end{table}
 
-The results here are as expected. The algorithm performs really well when using small files and the total execution time is really small. However, we can see that as the files grow bigger and bigger the parsing time starts becoming the dominating factor and takes up most of the computation part.
+The results here are as expected. The algorithm performs really well when using small files and the total execution time is really small. However, we can see that as the files grow bigger and bigger the parsing time starts becoming the dominating factor that takes up more than half of the total execution time.
 
 \subsection{Map-Reduce}
 
 \begin{table}[h!]
-\scriptsize
+\footnotesize
 \begin{center}
 \begin{tabular}{|c|c|c|}
 \hline
