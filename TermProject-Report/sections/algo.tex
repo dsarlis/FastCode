@@ -42,25 +42,36 @@ The algorithm's complexity is linear in the number of edges and nodes in the gra
 
 \subsection{Map-Reduce}
 
-The algorithm that we chose for the Map-Reduce part is based on the Hash-to-Min algorithm introduced in \cite{rastogi}. This algorithm works in multiple Map-Reduce rounds logarithmic
+The algorithm that we chose for the Map-Reduce part is based on the Hash-to-Min algorithm introduced in \cite{rastogi}. This algorithm works in multiple logarithmic Map-Reduce rounds  to calculate the connected components of a graph at the end. In each round the algorithm merges overlapping clusters to compute connected components. Essentially, the algorithm can be imagined as a different Breadth-First-Search (\eg BFS) being performed in parallel. Each BFS builds up a connected component by combining smaller ones until there is convergence and the whole connected component has been discovered.
 
 \begin{algorithm}
-\caption{Workflow}
-\label{algo:workflow}
-\State Emit $(u, C_u) \in h(C_ v)$
-\begin{algorithmic}[1]
-\State Initialize $C_{v}$ = ${v} \cup nbrs(v)$ for every $v \in V$
-\Repeat
-\State Merge $\bigcup C_v$ from $(v, C_v)$
-\Until{$C_v does$ not change for all $v$}
-\end{algorithmic}
+	\caption{Initialization Step}
+	\label{algo:first_step}
+	\begin{algorithmic}[1]
+		\Function{Map}{$key, value$}
+			\State
+		\EndFunction
+		\Function{Reduce}{$key, List<value>$}
+			\State
+		\EndFunction
+	\end{algorithmic}
 \end{algorithm}
 
-The initialization phase is done with one Map/Reduce job and each iteration of the cycle with another Map/Reduce job.
+\begin{algorithm}
+	\caption{Iterative Map-Reduce step}
+	\label{algo:second_step}
+	\begin{algorithmic}[1]
+		\Function{Map}{$key, value$}
+			\State
+		\EndFunction
+		\Function{Reduce}{$key, List<value>$}
+			\State
+		\EndFunction
+	\end{algorithmic}
+\end{algorithm}
 
-The Hash-to-All emits $(u, C_v)$ for all nodes $u \in C_v$.
+The initialization phase which parses the input file and creates the graph as an adjacency list is performed in one Map-Reduce job and each iteration of merging connected components is done using another Map-Reduce job.
 
 The Hash-to-Min emits $(v_{min}, C_v)$ and $(u, v_{min})$ for all nodes $u \in C_v$.
 
-The basic idea of the algorithm is to build up different components in a parallel fashion. It can be imagined as a different BFS being performed at the same time.
 
