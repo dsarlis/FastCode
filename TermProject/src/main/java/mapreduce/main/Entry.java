@@ -29,8 +29,8 @@ public class Entry {
 
         long end = System.currentTimeMillis();
 
-        System.out.println(String.format("Runtime for program %s: %d minutes", program,
-                (end - start)/1000/60));
+        System.out.println(String.format("Runtime for program %s: %d seconds", program,
+                (end - start)/1000));
     }
 }
 

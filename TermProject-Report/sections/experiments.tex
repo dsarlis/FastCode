@@ -1,4 +1,6 @@
-All files consist of edges making simple to parse as showed in \ref{fig:graphfileformat}.
+\subsection{Datasets}
+
+All the input files we used consist of edges making it straightforward to parse them as showed in \ref{fig:graphfileformat}.
 
 \begin{verbbox}
 node_from_1 node_to_1
@@ -6,6 +8,7 @@ node_from_2 node_to_2
 ...
 node_from_n node_to_n
 \end{verbbox}
+
 \begin{figure}[ht]
   \centering
   \theverbbox
@@ -13,9 +16,7 @@ node_from_n node_to_n
   \label{fig:graphfileformat}
 \end{figure}
 
-\subsection{Datasets}
-
-We used different graph files to measure the Sequential and MapRedude performace. The following table describe each one of them:
+We used different graph files taken from \cite{datasets} to measure both the Sequential and Map-Redude algorithm performance. The following table describes different metrics of each one:
 
 \begin{table}[h!]
 \footnotesize
@@ -27,7 +28,7 @@ We used different graph files to measure the Sequential and MapRedude performace
 \hline
 simple\_graph   & 10  & 14  & 55 bytes  \\
 \hline
-medium\_graph   & -  & -  & 96.2 Kb  \\
+medium\_graph   & -  & 9625  & 96.2 Kb  \\
 \hline
 ego-Facebook   & 4039  & 88234  & 854.4 Kb  \\
 \hline
@@ -42,14 +43,14 @@ big\_graph   & -  & -  & 2.4GB  \\
 \end{table}
 
 \subsection{Sequential}
-We used an implementation of Tarjan\'s Algorithm that has $O(\mid V \mid + \mid E \mid)$ worst case performance. It uses a DFS keeping the time of the nodes beign first discovered and the order of oldest ancestor it can reach. It begins at an arbitrary node and  visits every node of the graph exactly once. As it is going through the graph it will be generating the different connected components.
+We used an implementation of Tarjan's Algorithm that has $O(|V| + |E|)$ worst case performance. It uses a Depth-First-Approach (DFS) as described in Section \sec{sec:algo}. It begins at an arbitrary node and  visits every node of the graph exactly once. As it is going through the graph it will be generating the various connected components.
 
-\begin{table}[h!]
+\begin{table}[!h]
 \footnotesize
 \begin{center}
 \begin{tabular}{|c|c|c|}
 \hline
-{\bf Graph} & {\bf Time (nanoseconds)}& {\bf \# of components} \\
+{\bf Graph} & {\bf Time (milliseconds)}& {\bf \# of components} \\
 \hline
 \hline
 simple\_graph   & 0  & 3  \\
@@ -68,25 +69,27 @@ big\_graph   & -  & -  \\
 \end{center}
 \end{table}
 
+The results here are as expected. The algorithm performs really well when using small files and the total execution time is really small. However, we can see that as the files grow bigger and bigger the parsing time starts becoming the dominating factor and takes up most of the computation part.
+
 \subsection{Map-Reduce}
 
 \begin{table}[h!]
-\footnotesize
+\scriptsize
 \begin{center}
 \begin{tabular}{|c|c|c|}
 \hline
-{\bf Graph} & {\bf Time (nanoseconds)}& {\bf \# of components} \\
+{\bf Graph} & {\bf Phase 1 (sec)} & {\bf Phase 2 (sec)}\\
 \hline
 \hline
-simple\_graph   & -  & -  \\
+simple\_graph   & 10  & 45 \\
 \hline
-medium\_graph   & -  & -   \\
+medium\_graph   & 12 & 60 \\
 \hline
-ego-Facebook   & -  & -  \\
+ego-Facebook   & 30 & 150 \\
 \hline
-ego-Gplus   & -  & -\\
+ego-Gplus   & 60  & 220 \\
 \hline
-big\_graph   & -  & -  \\
+big\_graph   & 240 & 1740 \\
 \hline
 \end{tabular}
 \caption{Map-Reduce times}
