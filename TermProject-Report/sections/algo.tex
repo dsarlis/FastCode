@@ -1,0 +1,24 @@
+\subsection{Map Reduce}
+
+Two algorithm versions were implemented: Hast-to-All and Hash-to-Min. Both follow the same workflow:
+
+\begin{algorithm}
+\caption{Workflow}
+\label{algo:workflow}
+\begin{algorithmic}[1]
+\State Initialize $C_{v}$ = ${v} \cup nbrs(v)$ for every $v \in V$
+\Repeat
+\State Emit $(u, C_u) \in h(C_ v)$
+\State Merge $\bigcup C_v$ from $(v, C_v)$
+\Until{$C_v does$ not change for all $v$}
+\end{algorithmic}
+\end{algorithm}
+
+The initialization phase is done with one Map/Reduce job and each iteration of the cycle with another Map/Reduce job.
+
+The Hash-to-All emits $(u, C_v)$ for all nodes $u \in C_v$.
+
+The Hash-to-Min emits $(v_{min}, C_v)$ and $(u, v_{min})$ for all nodes $u \in C_v$.
+
+The basic idea of the algorithm is to build up different components in a parallel fashion. It can be imagined as a different BFS being performed at the same time.
+

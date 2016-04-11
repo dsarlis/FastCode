@@ -1,3 +1,18 @@
+All files consists of edges making simple to parse as showed in \ref{fig:graphfileformat}.
+
+\begin{verbbox}
+node_from_1 node_to_1
+node_from_2 node_to_2
+...
+node_from_n node_to_n
+\end{verbbox}
+\begin{figure}[ht]
+  \centering
+  \theverbbox
+  \caption{Graph file format}
+  \label{fig:graphfileformat}
+\end{figure}
+
 \subsection{Graphs}
 
 We used different graph files to measure the Sequential and MapRedude performace. The following table describe each one of them:
@@ -53,7 +68,7 @@ big\_graph   & -  & -  \\
 \end{center}
 \end{table}
 
-\subsection{MapReduce}
+\subsection{Map Reduce}
 
 \begin{table}[h!]
 \footnotesize
