@@ -1,3 +1,14 @@
+\begin{figure*}[!t]
+\begin{tabular}{@{}c@{}}
+ 	\begin{minipage}{42pc}
+ 		\centering
+ 		\includegraphics[width=40pc]{figures/mapreduce_example.pdf}
+ 		\caption{Example run of Map-Reduce algorithm}
+ 		\label{figure:hiveVsShark}
+	\end{minipage}
+\end{tabular}
+\end{figure*}
+
 The analysis that follows for both the sequential and Map-Reduce parts assumes a graph G that can be formalized as $G=(V,E)$ where $V$ is the set of vertices in the graph labeled from $0 \to N-1$ where $N=|V|$ and $E$ is the edges set, which is a set of of 2-element subsets in $V$, that is $E \subseteq \{\{u,v\}: \in V\}$.
 
 \subsection{Sequential}
@@ -68,7 +79,7 @@ Here comes the first optimization we performed in the original code using the Ma
 
 The second phase of Map-Reduce is the iterative step which merges together smaller connected components to form large ones in each iteration until convergence is achieved (\ie until there are no changes in the connected components calculated). Algorithm \ref{algo:second_step} show the approach we follow in this Map-Reduce job. The map function calculates the minimum node in each cluster which we call $v_min$. Then it emits $(u, v_min)$ for each node $u$ in the cluster and also $(v_min, cluster)$. This aggregates the connected component to $v_min$ while reassuring that the rest of the nodes are associated with $v_min$ to avoid creating duplicate connected components. This is the second optimization in our approach. The alternative here would be to emit the cluster to each node, but that would only bloat the number of data being transmitted and add an additional overhead. Only one node is enough to represent the whole connected component and therefore an easy choice is to use the minimum labeled node as the component's representative. The reducer then takes all the clusters that are associated with one node and merges them together. If the final cluster has changed, we increment a counter to indicate this. If no more changes have taken place, the algorithm has converged. As shown in \cite{rastogi}, the algorithm will converge in $O(logn)$ steps, where $n$ is the total number of nodes in the graph.
 
-\begin{algorithm}[t]
+\begin{algorithm}[!h]
 	\caption{Iterative Map-Reduce step}
 	\label{algo:second_step}
 	\begin{algorithmic}[1]
