@@ -24,7 +24,7 @@ hs_err_pid*
 *.bbl
 *.blg
 *.log
-*.pdf
+paper.pdf
 *.synctex.gz
 *.out
 
