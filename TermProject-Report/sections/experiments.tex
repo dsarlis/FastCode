@@ -1,6 +1,6 @@
 \subsection{Datasets}
 
-All the input files we used consist of edges making it straightforward to parse them as showed in \ref{fig:graphfileformat}.
+All the input files we used consist of edges making it straightforward to parse them as showed in Figure \ref{fig:graphfileformat}.
 
 \begin{verbbox}
 node_from_1 node_to_1
@@ -34,7 +34,7 @@ ego-Facebook   & 4039  & 88234  & 854.4 Kb  \\
 \hline
 ego-Gplus   & 107614  & 13673453  & 1.2GB  \\
 \hline
-big\_graph   & -  & -  & 2.4GB  \\
+big\_graph   & 19670319  & 146213222  & 2.4GB  \\
 \hline
 \end{tabular}
 \caption{Graphs}
@@ -46,22 +46,22 @@ big\_graph   & -  & -  & 2.4GB  \\
 We used an implementation of Tarjan's Algorithm that has $O(|V| + |E|)$ worst case performance. It uses a Depth-First-Approach (DFS) as described in Section \ref{sec:algo}. It begins at an arbitrary node and  visits every node of the graph exactly once. As it is going through the graph it will be generating the various connected components.
 
 \begin{table}[!h]
-\footnotesize
+\scriptsize
 \begin{center}
-\begin{tabular}{|c|c|c|}
+\begin{tabular}{|c|c|c|c|}
 \hline
-{\bf Graph} & {\bf Time (milliseconds)}& {\bf components \#} \\
+{\bf Graph} & {\bf Parse (ms)} & {\bf Compute (ms)} & {\bf components \#} \\
 \hline
 \hline
-simple\_graph   & 0  & 3  \\
+simple\_graph   & 4  & 0.247 & 3 \\
 \hline
-medium\_graph   & 4  & 2   \\
+medium\_graph   & 98  & 3 & 2 \\
 \hline
-ego-Facebook   & 11  & 1325  \\
+ego-Facebook   & 232 & 14 & 1325  \\
 \hline
-ego-Gplus   & 812 & 37249 \\
+ego-Gplus   & 49497 & 1104 & 37249 \\
 \hline
-big\_graph   & -  & -  \\
+big\_graph   & ?  & ? & ?  \\
 \hline
 \end{tabular}
 \caption{Sequential times}
@@ -69,7 +69,7 @@ big\_graph   & -  & -  \\
 \end{center}
 \end{table}
 
-The results here are as expected. The algorithm performs really well when using small files and the total execution time is really small. However, we can see that as the files grow bigger and bigger the parsing time starts becoming the dominating factor that takes up more than half of the total execution time.
+The results here are as expected. The algorithm performs really well when using small files and the total execution time is really small. However, we can see that as the files grow bigger and bigger the parsing time starts becoming the dominating factor that takes up most of the total execution time. The big graph instance was not successfully run on a single machine because of an out-of-memory error. The next step is to try with a really big virtual machine in AWS with enough memory that can handle it.
 
 \subsection{Map-Reduce}
 
@@ -85,13 +85,13 @@ Table \ref{tb:MapReducetimes} contains the execution time for the Map-Reduce imp
 \hline
 simple\_graph   & 23  & 82 \\
 \hline
-medium\_graph   & 12 & 60 \\
+medium\_graph   & 25 & 115 \\
 \hline
-ego-Facebook   & 30 & 150 \\
+ego-Facebook   & 25 & 180 \\
 \hline
-ego-Gplus   & 60  & 220 \\
+ego-Gplus   & 67  & 193 \\
 \hline
-big\_graph   & 240 & 1740 \\
+big\_graph   & 153 & 1840 \\
 \hline
 \end{tabular}
 \caption{Map-Reduce times}
