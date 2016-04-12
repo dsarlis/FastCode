@@ -49,17 +49,6 @@ We chose to implement a variation of Tarjan's algorithm to find strongly connect
 	\end{algorithmic}
 \end{algorithm}
 
-<<<<<<< HEAD
-The algorithm's complexity is linear in the number of edges and nodes in the graph, \ie $O(|V| + |E|)$. This means that the algorithm will be very efficient for relatively small graphs, but it will start being ineffective while the graphs grow bigger and bigger up to hundreds of million vertices and edges. In particular, the parsing time of the input file would be the bottleneck since it has to be done sequentially as well as the available memory on the machine we are using, since the graph has to fit in its memory for Algorithm \ref{algo:tarjan} to work. Map-Reduce helps to eliminate exactly these restrictions, since the parsing can be performed in parallel in addition to running the actual connected components algorithm in a parallel fashion.
-
-\subsection{Map-Reduce}
-
-The algorithm that we chose for the Map-Reduce part is based on the Hash-to-Min algorithm introduced in \cite{rastogi}. This algorithm works in multiple logarithmic Map-Reduce rounds  to calculate the connected components of a graph at the end. In each round the algorithm merges overlapping clusters to compute connected components. Essentially, the algorithm can be imagined as a different Breadth-First-Search (\eg BFS) being performed in parallel. Each BFS builds up a connected component by combining smaller ones until there is convergence and the whole connected component has been discovered.
-
-The are basically two phases in our Map-Reduce program for computing connected components. The first phase is the initialization phase which parses the input file and creates the graph as an adjacency list. The mapper emits a key-value pair for each edge in the graph and the reducer accumulates edges for each node and creates a mapping between nodes and list of neighbors. Algorithm \ref{algo:first_step} provides the pseudocode of this phase which is quite simple to follow.
-
-=======
->>>>>>> 4610e0f6792827eb8c2d300c2ccfd533378ad66d
 \begin{algorithm}[!h]
 	\caption{Initialization Step}
 	\label{algo:first_step}
@@ -108,6 +97,14 @@ The are basically two phases in our Map-Reduce program for computing connected c
 		\EndFunction
 	\end{algorithmic}
 \end{algorithm}
+
+The algorithm's complexity is linear in the number of edges and nodes in the graph, \ie $O(|V| + |E|)$. This means that the algorithm will be very efficient for relatively small graphs, but it will start being ineffective while the graphs grow bigger and bigger up to hundreds of million vertices and edges. In particular, the parsing time of the input file would be the bottleneck since it has to be done sequentially as well as the available memory on the machine we are using, since the graph has to fit in its memory for Algorithm \ref{algo:tarjan} to work. Map-Reduce helps to eliminate exactly these restrictions, since the parsing can be performed in parallel in addition to running the actual connected components algorithm in a parallel fashion.
+
+\subsection{Map-Reduce}
+
+The algorithm that we chose for the Map-Reduce part is based on the Hash-to-Min algorithm introduced in \cite{rastogi}. This algorithm works in multiple logarithmic Map-Reduce rounds  to calculate the connected components of a graph at the end. In each round the algorithm merges overlapping clusters to compute connected components. Essentially, the algorithm can be imagined as a different Breadth-First-Search (\eg BFS) being performed in parallel. Each BFS builds up a connected component by combining smaller ones until there is convergence and the whole connected component has been discovered.
+
+The are basically two phases in our Map-Reduce program for computing connected components. The first phase is the initialization phase which parses the input file and creates the graph as an adjacency list. The mapper emits a key-value pair for each edge in the graph and the reducer accumulates edges for each node and creates a mapping between nodes and list of neighbors. Algorithm \ref{algo:first_step} provides the pseudocode of this phase which is quite simple to follow.
 
 The algorithm's complexity is linear in the number of edges and nodes in the graph, \ie $O(|V| + |E|)$. This means that the algorithm will be very efficient for relatively small graphs, but it will start being ineffective while the graphs grow bigger and bigger up to hundreds of million vertices and edges. In particular, the parsing time of the input file would be the bottleneck since it has to be done sequentially as well as the available memory on the machine we are using, since the graph has to fit in its memory for Algorithm \ref{algo:tarjan} to work. Map-Reduce helps to eliminate exactly these restrictions, since the parsing can be performed in parallel in addition to running the actual connected components algorithm in a parallel fashion.
 
