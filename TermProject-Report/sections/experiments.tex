@@ -73,6 +73,8 @@ The results here are as expected. The algorithm performs really well when using 
 
 \subsection{Map-Reduce}
 
+Table \ref{tb:MapReducetimes} contains the execution time for the Map-Reduce implementation for each input graph file. We can see that using Map-Reduce for really small files is not very efficient but the real advantage is when using it to process large files. Specifically,  using Map-Reduce we were able to process the big\_graph file which failed on a single machine due to memory limitations.
+
 \begin{table}[h!]
 \footnotesize
 \begin{center}
@@ -81,7 +83,7 @@ The results here are as expected. The algorithm performs really well when using 
 {\bf Graph} & {\bf Phase 1 (sec)} & {\bf Phase 2 (sec)}\\
 \hline
 \hline
-simple\_graph   & 10  & 45 \\
+simple\_graph   & 23  & 82 \\
 \hline
 medium\_graph   & 12 & 60 \\
 \hline
@@ -96,3 +98,5 @@ big\_graph   & 240 & 1740 \\
 \label{tb:MapReducetimes}
 \end{center}
 \end{table}
+
+
