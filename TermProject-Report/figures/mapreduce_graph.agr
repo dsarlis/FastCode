@@ -92,7 +92,7 @@
 @timestamp rot 0
 @timestamp font 0
 @timestamp char size 1.000000
-@timestamp def "Mon Apr 11 18:28:50 2016"
+@timestamp def "Mon Apr 11 18:17:22 2016"
 @r0 off
 @link r0 to g0
 @r0 type above
@@ -354,7 +354,7 @@
 @    s0 errorbar riser clip off
 @    s0 errorbar riser clip length 0.100000
 @    s0 comment "copy of set G0.S1"
-@    s0 legend  "Phase 1"
+@    s0 legend  "Parsing"
 @    s1 hidden false
 @    s1 type bar
 @    s1 symbol 10
@@ -403,7 +403,7 @@
 @    s1 errorbar riser clip off
 @    s1 errorbar riser clip length 0.100000
 @    s1 comment "copy of set G0.S0"
-@    s1 legend  "Phase 2"
+@    s1 legend  "Compute"
 @target G0.S0
 @type bar
 0.8 23

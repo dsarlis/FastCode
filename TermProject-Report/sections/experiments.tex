@@ -99,4 +99,12 @@ big\_graph   & 153 & 1840 \\
 \end{center}
 \end{table}
 
+Figure \ref{fig:mapreduce_graph} shows an overview of the times it took us to run the Map-Reduce jobs for the different graphs. It is obvious that the parsing time now is linear to the size of input since it is being split among the multiple mappers. This is one advantage of Map-Reduce. We can also observe that using Map-Reduce for small graphs is more of an actual overhead rather than helpful. However, when it comes to large graphs Map-Reduce performs really well and it is possible to even parse the big graph successfully. The pattern here suggests that even when the graph becomes bigger the first phase is linear to the size of the input, while the second phase depends on the input and specifically, on how many rounds of Map-Reduce are performed.
+
+\begin{figure}[!h]
+ \centering
+    \includegraphics[]{figures/mapreduce_graph}
+	\caption{Map-Reduce running times}
+    \label{figure:mapreduce_graph}
+\end{figure}
 
