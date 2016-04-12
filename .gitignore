@@ -26,6 +26,7 @@ hs_err_pid*
 *.log
 *.pdf
 *.synctex.gz
+*.out
 
 # graphs
 gplus_combined.txt
