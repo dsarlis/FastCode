@@ -22,7 +22,7 @@
 hs_err_pid*
 
 # target folder
-*/target
+target
 
 # latex files
 *.aux
