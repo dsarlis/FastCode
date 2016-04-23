@@ -28,13 +28,13 @@ public class TwoPhaseDriver {
                 currentOutput = output + "-largeStar-" + largeIteration;
                 starJob(input, currentOutput, "Large Star Job", LargeStarMapper.class, LargeStarReducer.class);
                 input = currentOutput;
-            } while (!checker.checkSumsChanged(currentOutput));
+            } while (checker.checkSumsChanged(currentOutput));
             smallIteration++;
             currentOutput = output + "-smallStar-" + smallIteration;
             starJob(input, currentOutput, "Small Star Job", SmallStarMapper.class,
                     SmallStarReducer.class);
             input = currentOutput;
-        } while (!checker.checkSumsChanged(currentOutput));
+        } while (checker.checkSumsChanged(currentOutput));
     }
 
     private static void starJob(String input, String output, String jobName, Class mapper, Class reducer) throws Exception {
