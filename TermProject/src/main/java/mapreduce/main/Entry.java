@@ -18,6 +18,8 @@ public class Entry {
             HashToDriver.main(args, HashToMinMapper.class);
         else if (program.equals("hashToAll")) {
             HashToDriver.main(args, HashToAllMapper.class);
+        } else if (program.equals("twoPhase")) {
+          TwoPhaseDriver.main(args);
         } else {
             System.out.println("Unknown program!");
             System.exit(1);
