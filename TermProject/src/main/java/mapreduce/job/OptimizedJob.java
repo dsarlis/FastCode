@@ -72,9 +72,9 @@ public class OptimizedJob extends Job {
         fs.delete(new Path(output), true);
         // CommonFileOperations.rmr(output);
 
-        if (!jobName.equals("Create clusters job")) {
+        /*if (!jobName.equals("Create clusters job")) {
             reduceJobs = 30;
-        }
+        }*/
 
         if (reduceJobs == 0)
             setNumReduceTasks(reducer_capacity);
