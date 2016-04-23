@@ -8,15 +8,8 @@ import java.io.IOException;
 public class LargeStarReducer extends StarReducer {
 
     @Override
-    protected void reduce(Iterable<Text> neighbors, Context context, String u, String m)
-            throws IOException, InterruptedException {
-        for (Text neighbor: neighbors) {
-            String neighborStr = neighbor.toString();
-
-            if (neighborStr.compareTo(u) > 0) {
-                context.write(neighbor, new Text(m));
-            }
-        }
+    protected boolean condition(String neighborStr, String u) {
+        return neighborStr.compareTo(u) > 0;
     }
 
 }

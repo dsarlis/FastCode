@@ -8,11 +8,8 @@ import java.io.IOException;
 public class SmallStarReducer extends StarReducer {
 
     @Override
-    protected void reduce(Iterable<Text> neighbors, Context context, String u, String m)
-            throws IOException, InterruptedException {
-        for (Text neighbor: neighbors) {
-            context.write(neighbor, new Text(m));
-        }
+    protected boolean condition(String neighborStr, String u) {
+        return true;
     }
 
 }
