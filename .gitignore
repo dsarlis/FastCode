@@ -1,4 +1,5 @@
 *.class
+*.num
 
 # Intellij
 
@@ -35,3 +36,7 @@ paper.pdf
 
 # graphs
 gplus_combined.txt
+big_graph_2
+
+# Pem files
+*.pem

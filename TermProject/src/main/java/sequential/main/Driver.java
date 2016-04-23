@@ -1,12 +1,12 @@
 package sequential.main;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.List;
-
 import sequential.model.ConnectedComponents;
 import sequential.model.Graph;
 import sequential.util.FileIO;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.List;
 
 public class Driver {
 
@@ -25,5 +25,4 @@ public class Driver {
 		System.out.println(String.format("Runtime for program sequential: %d milli-seconds", end - start));
 		System.out.println(String.format("Result: %d components", components.size()));
 	}
-
 }

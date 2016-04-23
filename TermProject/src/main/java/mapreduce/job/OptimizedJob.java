@@ -53,7 +53,7 @@ public class OptimizedJob extends Job {
      *
      * @throws IOException
      */
-    private void setup() throws IOException {
+    private void setup(String jobName) throws IOException {
         JobConf job_conf = new JobConf(conf);
         JobClient job_client = new JobClient(job_conf);
         ClusterStatus cluster_status = job_client.getClusterStatus();
@@ -71,6 +71,10 @@ public class OptimizedJob extends Job {
         FileSystem fs = FileSystem.get(URI.create(output), conf);
         fs.delete(new Path(output), true);
         // CommonFileOperations.rmr(output);
+
+        if (!jobName.equals("Create clusters job")) {
+            reduceJobs = 30;
+        }
 
         if (reduceJobs == 0)
             setNumReduceTasks(reducer_capacity);
@@ -139,7 +143,7 @@ public class OptimizedJob extends Job {
      */
     public long run(boolean checkCounter) throws IOException, InterruptedException,
             ClassNotFoundException {
-        setup();
+        setup(jobName);
 
         long start = System.currentTimeMillis();
         this.waitForCompletion(true);
