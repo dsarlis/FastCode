@@ -12,7 +12,7 @@ public class ChecksumChecker {
     private static final String BUCKET_NAME = "18645-termproject-output";
     private Set<String> checkSums;
 
-    public ChecksumChecker(Set<String> checkSums) {
+    public ChecksumChecker() {
         checkSums = new HashSet<>();
     }
 
