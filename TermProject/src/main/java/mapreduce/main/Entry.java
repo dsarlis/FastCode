@@ -19,10 +19,7 @@ public class Entry {
             Driver.main(args, HashToMinMapper.class);
         else if (program.equals("hashToAll")) {
             Driver.main(args, HashToAllMapper.class);
-        } else if (program.equals("hashGreaterToMin")) {
-            Driver.main(args, HashGreaterToMinMapper.class);
-        }
-        else {
+        } else {
             System.out.println("Unknown program!");
             System.exit(1);
         }
