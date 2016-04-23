@@ -11,7 +11,7 @@ import org.apache.hadoop.io.Text;
 import java.io.IOException;
 
 
-public class Driver {
+public class HashToDriver {
 
     public static void main(String[] args, Class c) throws Exception {
         SimpleParser parser = new SimpleParser(args);

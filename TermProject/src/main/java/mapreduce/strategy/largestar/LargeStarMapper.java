@@ -1,4 +1,4 @@
-package mapreduce.strategy.largestart;
+package mapreduce.strategy.largestar;
 
 import mapreduce.util.Constants;
 import org.apache.hadoop.io.LongWritable;

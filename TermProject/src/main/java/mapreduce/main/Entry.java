@@ -1,7 +1,6 @@
 package mapreduce.main;
 
 
-import mapreduce.strategy.HashGreaterToMinMapper;
 import mapreduce.strategy.HashToAllMapper;
 import mapreduce.strategy.HashToMinMapper;
 import mapreduce.util.SimpleParser;
@@ -16,9 +15,9 @@ public class Entry {
         long start = System.currentTimeMillis();
 
         if (program.equals("hashToMin"))
-            Driver.main(args, HashToMinMapper.class);
+            HashToDriver.main(args, HashToMinMapper.class);
         else if (program.equals("hashToAll")) {
-            Driver.main(args, HashToAllMapper.class);
+            HashToDriver.main(args, HashToAllMapper.class);
         } else {
             System.out.println("Unknown program!");
             System.exit(1);
