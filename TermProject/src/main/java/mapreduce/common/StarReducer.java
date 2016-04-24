@@ -4,8 +4,8 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public abstract class StarReducer extends Reducer<Text, Text, Text, Text> {
 
@@ -15,7 +15,7 @@ public abstract class StarReducer extends Reducer<Text, Text, Text, Text> {
     protected void reduce(Text node, Iterable<Text> neighbors, Context context)
             throws IOException, InterruptedException {
         String u = node.toString();
-        List<Text> neighborsOutput = new ArrayList<>();
+        Set<Text> neighborsOutput = new HashSet<>();
         String m = computeMin(neighbors, u, neighborsOutput);
 
         for (Text neighbor: neighborsOutput) {
@@ -23,7 +23,7 @@ public abstract class StarReducer extends Reducer<Text, Text, Text, Text> {
         }
     }
 
-    private String computeMin(Iterable<Text> neighbors, String u, List<Text> neighborsOutput) {
+    private String computeMin(Iterable<Text> neighbors, String u, Set<Text> neighborsOutput) {
         String m = u;
 
         for (Text neighbor: neighbors) {
