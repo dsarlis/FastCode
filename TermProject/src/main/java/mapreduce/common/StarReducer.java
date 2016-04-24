@@ -19,6 +19,7 @@ public abstract class StarReducer extends Reducer<Text, Text, Text, Text> {
         String m = computeMin(neighbors, u, neighborsOutput);
 
         for (Text neighbor: neighborsOutput) {
+            System.out.println("Output-> {key: " + neighbor + ", value: " + m + "}");
             context.write(neighbor, new Text(m));
         }
     }
@@ -27,6 +28,7 @@ public abstract class StarReducer extends Reducer<Text, Text, Text, Text> {
         String m = u;
 
         for (Text neighbor: neighbors) {
+            System.out.println("Key: " + u + " value: " + neighbor);
             String neighborStr = neighbor.toString();
 
             if (neighborStr.compareTo(m) < 0) {

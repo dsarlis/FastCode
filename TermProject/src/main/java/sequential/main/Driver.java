@@ -20,7 +20,7 @@ public class Driver {
 		List<List<String>> components = new ConnectedComponents(graph).findConnectedComponents();
 		end = System.currentTimeMillis();
 
-//		System.out.println(components);
+		System.out.println(components);
 
 		System.out.println(String.format("Runtime for program sequential: %d milli-seconds", end - start));
 		System.out.println(String.format("Result: %d components", components.size()));
