@@ -18,7 +18,7 @@ public class ChecksumChecker {
     }
 
     public boolean checkSumsChanged(String path) {
-        System.out.println("Inside checkSumsChanged");
+//        System.out.println("Inside checkSumsChanged");
         Set<String> newCheckSums = new HashSet<>();
         AmazonS3Client s3Client = new AmazonS3Client(new ProfileCredentialsProvider());
         ListObjectsRequest listObjectsRequest = new ListObjectsRequest()
@@ -31,7 +31,7 @@ public class ChecksumChecker {
             objectListing = s3Client.listObjects(listObjectsRequest);
             for (S3ObjectSummary objectSummary :
                     objectListing.getObjectSummaries()) {
-                System.out.println("File: " + objectSummary.getKey());
+//                System.out.println("File: " + objectSummary.getKey());
                 if (objectSummary.getKey().contains("part")) {
                     String checkSum = objectSummary.getETag().toString();
                     if (!checkSums.contains(checkSum)) {
@@ -44,7 +44,7 @@ public class ChecksumChecker {
             listObjectsRequest.setMarker(objectListing.getNextMarker());
         } while (objectListing.isTruncated());
 
-        System.out.println("Result for output: " + path + " hasChanged:" + changed);
+//        System.out.println("Result for output: " + path + " hasChanged:" + changed);
 
         if (changed) {
             checkSums = newCheckSums;
