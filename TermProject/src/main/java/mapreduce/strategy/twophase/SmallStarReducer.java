@@ -1,4 +1,4 @@
-package mapreduce.strategy.smallstar;
+package mapreduce.strategy.twophase;
 
 import mapreduce.common.StarReducer;
 
