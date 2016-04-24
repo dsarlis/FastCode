@@ -15,27 +15,27 @@ public abstract class StarReducer extends Reducer<Text, Text, Text, Text> {
     protected void reduce(Text node, Iterable<Text> neighbors, Context context)
             throws IOException, InterruptedException {
         String u = node.toString();
-        Set<Text> neighborsOutput = new HashSet<>();
+        Set<String> neighborsOutput = new HashSet<>();
         String m = computeMin(neighbors, u, neighborsOutput);
 
-        for (Text neighbor: neighborsOutput) {
-            System.out.println("Output-> {key: " + neighbor + ", value: " + m + "}");
-            context.write(neighbor, new Text(m));
+        for (String neighbor: neighborsOutput) {
+//            System.out.println("Output-> {key: " + neighbor + ", value: " + m + "}");
+            context.write(new Text(neighbor), new Text(m));
         }
     }
 
-    private String computeMin(Iterable<Text> neighbors, String u, Set<Text> neighborsOutput) {
+    private String computeMin(Iterable<Text> neighbors, String u, Set<String> neighborsOutput) {
         String m = u;
 
         for (Text neighbor: neighbors) {
-            System.out.println("Key: " + u + " value: " + neighbor);
+//            System.out.println("Key: " + u + " value: " + neighbor);
             String neighborStr = neighbor.toString();
 
             if (neighborStr.compareTo(m) < 0) {
                 m = neighborStr;
             }
             if (condition(neighborStr, u)) {
-                neighborsOutput.add(neighbor);
+                neighborsOutput.add(neighbor.toString());
             }
         }
         return m;
