@@ -35,7 +35,7 @@ public class ChecksumChecker {
                 if (objectSummary.getKey().contains("part")) {
                     String checkSum = objectSummary.getETag().toString();
                     if (!checkSums.contains(checkSum)) {
-                        System.out.println("Found a file that has changed");
+//                        System.out.println("Found a file that has changed");
                         changed = true;
                     }
                     newCheckSums.add(checkSum);
