@@ -16,7 +16,8 @@ public class SmallStarMapper extends Mapper<LongWritable, Text, Text, Text> {
         String u = edge[0];
         String v = edge[1];
 
-        if (u.compareTo(v) <= 0) {
+        //Lv <= Lu
+        if (v.compareTo(u) <= 0) {
             context.write(new Text(u), new Text(v));
         } else {
             context.write(new Text(v), new Text(u));
