@@ -15,25 +15,33 @@ public class ChecksumChecker {
         checkSums = new HashSet<>();
     }
 
+    /**
+     * Method to check if output files have changed
+     * @param path
+     * @return
+     */
     public boolean checkSumsChanged(String path) {
-//        System.out.println("Inside checkSumsChanged");
         Set<String> newCheckSums = new HashSet<>();
         AmazonS3Client s3Client = new AmazonS3Client(new ProfileCredentialsProvider());
+        /* Get the last output folder */
         ListObjectsRequest listObjectsRequest = new ListObjectsRequest()
                 .withBucketName(BUCKET_NAME)
                 .withPrefix(path);
         ObjectListing objectListing;
 
+        /* Go through the files and check if they are already present in the Set
+         * If not, it means that the output has changed
+         * The set holds a list of the checksums of the previous
+         * iteration to test against the present iteration
+         */
         boolean changed = false;
         do {
             objectListing = s3Client.listObjects(listObjectsRequest);
             for (S3ObjectSummary objectSummary :
                     objectListing.getObjectSummaries()) {
-//                System.out.println("File: " + objectSummary.getKey());
                 if (objectSummary.getKey().contains("part")) {
                     String checkSum = objectSummary.getETag().toString();
                     if (!checkSums.contains(checkSum)) {
-//                        System.out.println("Found a file that has changed");
                         changed = true;
                     }
                     newCheckSums.add(checkSum);
@@ -42,8 +50,7 @@ public class ChecksumChecker {
             listObjectsRequest.setMarker(objectListing.getNextMarker());
         } while (objectListing.isTruncated());
 
-//        System.out.println("Result for output: " + path + " hasChanged:" + changed);
-
+        /* If at least one file has changed, then it means we need to still keep going */
         if (changed) {
             checkSums = newCheckSums;
             return true;

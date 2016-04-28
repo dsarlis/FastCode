@@ -23,6 +23,10 @@ public class HashToDriver {
         long counter = 1;
         int iteration = 0;
 
+        /* While the counter > 0, repeat the hash step
+         * When it's 0, it means that the clusters haven't changed
+         * and the algorithm has converged
+         */
         while (counter > 0) {
             String output = parser.get("output") + iteration;
             counter = hashStep(input, output, c);
@@ -31,6 +35,12 @@ public class HashToDriver {
         }
     }
 
+    /**
+     * First Map-Reduce job to calculate the adjacency list of a node
+     * @param input
+     * @param output
+     * @throws Exception
+     */
     private static void createClusters(String input, String output) throws Exception {
         OptimizedJob job = new OptimizedJob(new Configuration(), input, output, "Create clusters job");
 
@@ -39,6 +49,16 @@ public class HashToDriver {
         job.run(false);
     }
 
+    /**
+     * Hash-step for distributing the clusters to the minimum labeled nodes
+     * @param input
+     * @param output
+     * @param c
+     * @return
+     * @throws InterruptedException
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     private static long hashStep(String input, String output, Class c)
             throws InterruptedException, IOException, ClassNotFoundException {
         OptimizedJob job = new OptimizedJob(new Configuration(), input, output,
