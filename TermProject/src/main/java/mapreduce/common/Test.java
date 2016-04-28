@@ -10,20 +10,26 @@ public class Test {
 
 	public static void main(String[] args) {
         AmazonS3Client s3Client = new AmazonS3Client(new ProfileCredentialsProvider());
-        ListObjectsRequest listObjectsRequest = new ListObjectsRequest()
-                .withBucketName("18645-termproject-output")
-                .withPrefix("hashtomin-big0");
-        ObjectListing objectListing;
 
-        do {
-            objectListing = s3Client.listObjects(listObjectsRequest);
-            for (S3ObjectSummary objectSummary :
-                    objectListing.getObjectSummaries()) {
-                if (objectSummary.getKey().contains("part")) {
-                    System.out.println(objectSummary.getETag());
+        for (int i = 0; i < 63; i++) {
+            ListObjectsRequest listObjectsRequest = new ListObjectsRequest()
+                    .withBucketName("18645-termproject-output")
+                    .withPrefix("twophase-medium-largeStar-" + i);
+            ObjectListing objectListing;
+
+            int count = 0;
+            do {
+                objectListing = s3Client.listObjects(listObjectsRequest);
+                for (S3ObjectSummary objectSummary :
+                        objectListing.getObjectSummaries()) {
+                    if (objectSummary.getKey().contains("part")) {
+                        System.out.println(objectSummary.getETag());
+                        count++;
+                    }
                 }
-            }
-            listObjectsRequest.setMarker(objectListing.getNextMarker());
-        } while (objectListing.isTruncated());
-	}
+                listObjectsRequest.setMarker(objectListing.getNextMarker());
+            } while (objectListing.isTruncated());
+            System.out.println(count);
+        }
+    }
 }

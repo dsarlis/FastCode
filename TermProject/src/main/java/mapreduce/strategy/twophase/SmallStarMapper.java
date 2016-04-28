@@ -1,4 +1,4 @@
-package mapreduce.strategy.largestar;
+package mapreduce.strategy.twophase;
 
 import mapreduce.util.Constants;
 import org.apache.hadoop.io.LongWritable;
@@ -7,7 +7,7 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 
-public class LargeStarMapper extends Mapper<LongWritable, Text, Text, Text> {
+public class SmallStarMapper extends Mapper<LongWritable, Text, Text, Text> {
 
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
@@ -16,8 +16,12 @@ public class LargeStarMapper extends Mapper<LongWritable, Text, Text, Text> {
         String u = edge[0];
         String v = edge[1];
 
-        context.write(new Text(u), new Text(v));
-        context.write(new Text(v), new Text(u));
+        //Lv <= Lu
+        if (v.compareTo(u) <= 0) {
+            context.write(new Text(u), new Text(v));
+        } else {
+            context.write(new Text(v), new Text(u));
+        }
     }
 
 }

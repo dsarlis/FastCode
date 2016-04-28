@@ -1,4 +1,4 @@
-package mapreduce.strategy.largestar;
+package mapreduce.strategy.twophase;
 
 import mapreduce.common.StarReducer;
 import org.apache.hadoop.io.Text;

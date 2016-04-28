@@ -1,10 +1,7 @@
 package mapreduce.main;
 
 import mapreduce.job.OptimizedJob;
-import mapreduce.strategy.largestar.LargeStarMapper;
-import mapreduce.strategy.largestar.LargeStarReducer;
-import mapreduce.strategy.smallstar.SmallStarMapper;
-import mapreduce.strategy.smallstar.SmallStarReducer;
+import mapreduce.strategy.twophase.*;
 import mapreduce.util.ChecksumChecker;
 import mapreduce.util.SimpleParser;
 import org.apache.hadoop.conf.Configuration;
@@ -38,6 +35,8 @@ public class TwoPhaseDriver {
             input = currentOutput;
             parts = currentOutput.split("/");
         } while (checker.checkSumsChanged(parts[parts.length-1]));
+
+        starJob(input, output, "Merge job", TwoPhaseMapper.class, TwoPhaseReducer.class);
     }
 
     private static void starJob(String input, String output, String jobName, Class mapper, Class reducer) throws Exception {
