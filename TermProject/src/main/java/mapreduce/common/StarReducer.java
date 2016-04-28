@@ -4,12 +4,13 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Set;
 
 public abstract class StarReducer extends Reducer<Text, Text, Text, Text> {
 
-    protected abstract boolean condition(String neighborStr, String u);
+    protected abstract boolean condition(BigInteger neighborStr, BigInteger u);
 
     @Override
     protected void reduce(Text node, Iterable<Text> neighbors, Context context)
@@ -25,20 +26,22 @@ public abstract class StarReducer extends Reducer<Text, Text, Text, Text> {
     }
 
     private String computeMin(Iterable<Text> neighbors, String u, Set<String> neighborsOutput) {
-        String m = u;
+        BigInteger m = new BigInteger(u);
+        BigInteger uValue = new BigInteger(u);
+
 
         for (Text neighbor: neighbors) {
 //            System.out.println("Key: " + u + " value: " + neighbor);
-            String neighborStr = neighbor.toString();
+            BigInteger neighborValue = new BigInteger(neighbor.toString());
 
-            if (neighborStr.compareTo(m) < 0) {
-                m = neighborStr;
+            if (neighborValue.compareTo(m) < 0) {
+                m = neighborValue;
             }
-            if (condition(neighborStr, u)) {
+            if (condition(neighborValue, uValue)) {
                 neighborsOutput.add(neighbor.toString());
             }
         }
-        return m;
+        return m.toString();
     }
 
 }
