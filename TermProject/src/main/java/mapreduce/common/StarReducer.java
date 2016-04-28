@@ -5,8 +5,7 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
 import java.math.BigInteger;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public abstract class StarReducer extends Reducer<Text, Text, Text, Text> {
 
@@ -18,8 +17,10 @@ public abstract class StarReducer extends Reducer<Text, Text, Text, Text> {
         String u = node.toString();
         Set<String> neighborsOutput = new HashSet<>();
         String m = computeMin(neighbors, u, neighborsOutput);
+        List<String> neighborsSorted = new ArrayList<>(neighborsOutput);
+        Collections.sort(neighborsSorted);
 
-        for (String neighbor: neighborsOutput) {
+        for (String neighbor: neighborsSorted) {
 //            System.out.println("Output-> {key: " + neighbor + ", value: " + m + "}");
             context.write(new Text(neighbor), new Text(m));
         }

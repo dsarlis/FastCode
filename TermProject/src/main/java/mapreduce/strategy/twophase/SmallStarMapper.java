@@ -6,6 +6,7 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
+import java.math.BigInteger;
 
 public class SmallStarMapper extends Mapper<LongWritable, Text, Text, Text> {
 
@@ -13,14 +14,14 @@ public class SmallStarMapper extends Mapper<LongWritable, Text, Text, Text> {
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
         String line = value.toString();
         String[] edge = line.split(Constants.SPACE_REGEX);
-        String u = edge[0];
-        String v = edge[1];
+        BigInteger u = new BigInteger(edge[0]);
+        BigInteger v = new BigInteger(edge[1]);
 
         //Lv <= Lu
         if (v.compareTo(u) <= 0) {
-            context.write(new Text(u), new Text(v));
+            context.write(new Text(u.toString()), new Text(v.toString()));
         } else {
-            context.write(new Text(v), new Text(u));
+            context.write(new Text(v.toString()), new Text(u.toString()));
         }
     }
 
