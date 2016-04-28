@@ -13,6 +13,7 @@ public class FirstStepReducer extends Reducer<Text, Text, Text, Text> {
             throws IOException, InterruptedException {
         StringBuilder builder = new StringBuilder();
 
+        // Create a list of nodes in the Cluster
         builder.append(key.toString());
         for (Text v : value) {
             builder.append(Constants.CLUSTER_SEPARATOR).append(v.toString());

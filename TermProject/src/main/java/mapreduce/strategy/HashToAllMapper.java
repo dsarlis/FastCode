@@ -16,7 +16,7 @@ public class HashToAllMapper extends Mapper<LongWritable, Text, Text, Text> {
         String[] CvNodes  = Cv.split(Constants.CLUSTER_SEPARATOR);
 
         for (String u: CvNodes) {
-            //Emit (u, Cv)
+            //Emit (u, Cv) to all nodes
             context.write(new Text(u), new Text(Cv));
         }
     }

@@ -16,6 +16,7 @@ public class HashToMinMapper extends Mapper<LongWritable, Text, Text, Text> {
         String[] CvNodes  = Cv.split(Constants.CLUSTER_SEPARATOR);
         String Vmin = CvNodes[0];
 
+        /* Compute minimum node */
         for (int i = 1; i < CvNodes.length; i++) {
             String node = CvNodes[i];
 

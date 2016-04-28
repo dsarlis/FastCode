@@ -17,7 +17,8 @@ public class SmallStarMapper extends Mapper<LongWritable, Text, Text, Text> {
         BigInteger u = new BigInteger(edge[0]);
         BigInteger v = new BigInteger(edge[1]);
 
-        //Lv <= Lu
+        //if Lv <= Lu emit u,v
+        // else emit v,u
         if (v.compareTo(u) <= 0) {
             context.write(new Text(u.toString()), new Text(v.toString()));
         } else {

@@ -36,7 +36,7 @@ public class MergeReducer extends Reducer<Text, Text, Text, Text> {
                 builder.append(Constants.CLUSTER_SEPARATOR).append(iterator.next());
             }
         }
-        //Used to determinate stop condition
+        //Used to determine stop condition
         //The new merged cluster has one or more new element(s)
         //http://codingwiththomas.blogspot.com/2011/04/controlling-hadoop-job-recursion.html
         if (maxSize < mergedCluster.size()) {

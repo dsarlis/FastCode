@@ -26,6 +26,10 @@ public class ConnectedComponents {
 		components = new ArrayList<>();
 	}
 
+    /**
+     * Find the connected components of a graph by repeatedly executing a DFS search
+     * @return
+     */
 	public List<List<String>> findConnectedComponents() {
 		for (int u = 0; u < numberOfNodes; u++) {
 			if (!visited[u]) {
@@ -35,6 +39,11 @@ public class ConnectedComponents {
 		return components;
 	}
 
+	/**
+	 * Traverse the graph using DFS and mark nodes that belong to the same connected component
+     * This is based on Tarjan's algorithm: https://en.wikipedia.org/wiki/Tarjan%27s_strongly_connected_components_algorithm
+	 * @param u
+     */
 	private void dfs(int u) {
 
 		lowlink[u] = time++;

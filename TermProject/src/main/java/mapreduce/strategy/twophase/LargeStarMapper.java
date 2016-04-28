@@ -16,6 +16,7 @@ public class LargeStarMapper extends Mapper<LongWritable, Text, Text, Text> {
         String u = edge[0];
         String v = edge[1];
 
+        /* Emit u,v and v,u */
         context.write(new Text(u), new Text(v));
         context.write(new Text(v), new Text(u));
     }

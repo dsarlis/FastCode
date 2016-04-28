@@ -1,5 +1,7 @@
 package sequential.util;
 
+import sequential.model.Graph;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,8 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import sequential.model.Graph;
 
 public class FileIO {
 
@@ -25,6 +25,10 @@ public class FileIO {
 			int nodeCounter = 0;
 			Map<Integer, String> invertedMapping = new HashMap<>();
 
+			/* Parse the file of edges and create a graph in the form of an adjacency list
+			 * Convert the node labels to a range from 0 to n-1 where n is the number of nodes
+			 * This is required by the sequential algorithm used to find connected components
+			 */
 			while ((line = bufferedReader.readLine()) != null) {
 				if (line.startsWith("#")) {
 					continue;
@@ -52,7 +56,7 @@ public class FileIO {
 			graph = dynamicSizeGraph.values().toArray(graph);
 			for (int i = 0; i < nodeCounter; i++) {
 				if (graph[i] == null) {
-					graph[i] = new ArrayList<Integer>();
+					graph[i] = new ArrayList<>();
 				}
 			}
 

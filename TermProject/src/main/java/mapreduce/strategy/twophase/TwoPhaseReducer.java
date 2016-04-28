@@ -21,6 +21,7 @@ public class TwoPhaseReducer extends Reducer<Text, Text, Text, Text> {
             nodes.add(neighbor.toString());
         }
 
+        /* Merge together edges which belong to the same leader (thus to the same component) */
         StringBuilder sb = new StringBuilder();
         Iterator it = nodes.iterator();
         if (it.hasNext()) {

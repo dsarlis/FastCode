@@ -14,6 +14,7 @@ public class Entry {
 
         long start = System.currentTimeMillis();
 
+        /* Call the right Driver class based on the argument */
         if (program.equals("hashToMin"))
             HashToDriver.main(args, HashToMinMapper.class);
         else if (program.equals("hashToAll")) {
