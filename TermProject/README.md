@@ -67,7 +67,7 @@ Example
 
 ###Scripts
 
-Wei have three scripts:
+We have three scripts:
 
 * create_cluster.sh: Creates the Amazon EMR with speacial configuration we were using.
 * generate-graph.py: Creates random graph using networkx from Python. Takes three arguments: number of nodes, number of edges and output file.
