@@ -102,7 +102,7 @@ The algorithm's complexity is linear in the number of edges and nodes in the gra
 
 \subsection{Map-Reduce}
 
-\subsubsection{Hash-to-min}
+\subsubsection{Hash-to-Min}
 
 
 One of the algorithms that we chose for the Map-Reduce part is based on the Hash-to-Min algorithm introduced in \cite{rastogi}. This algorithm works in multiple logarithmic Map-Reduce rounds  to calculate the connected components of a graph at the end. In each round the algorithm merges overlapping clusters to compute connected components. Essentially, the algorithm can be imagined as a different Breadth-First-Search (\eg BFS) being performed in parallel. Each BFS builds up a connected component by combining smaller ones until there is convergence and the whole connected component has been discovered.
