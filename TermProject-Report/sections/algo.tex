@@ -107,7 +107,7 @@ The algorithm's complexity is linear in the number of edges and nodes in the gra
 
 One of the algorithms that we chose for the Map-Reduce part is based on the Hash-to-Min algorithm introduced in \cite{rastogi}. This algorithm works in multiple logarithmic Map-Reduce rounds  to calculate the connected components of a graph at the end. In each round the algorithm merges overlapping clusters to compute connected components. Essentially, the algorithm can be imagined as a different Breadth-First-Search (\eg BFS) being performed in parallel. Each BFS builds up a connected component by combining smaller ones until there is convergence and the whole connected component has been discovered.
 
-The are basically two phases in our Map-Reduce program for computing connected components. The first phase is the initialization phase which parses the input file and creates the graph as an adjacency list. The mapper emits a key-value pair for each edge in the graph and the reducer accumulates edges for each node and creates a mapping between nodes and list of neighbors. Algorithm \ref{algo:first_step} provides the pseudocode of this phase which is quite simple to follow.
+The are basically two phases in our Hash-to-min program for computing connected components. The first phase is the initialization phase which parses the input file and creates the graph as an adjacency list. The mapper emits a key-value pair for each edge in the graph and the reducer accumulates edges for each node and creates a mapping between nodes and list of neighbors. Algorithm \ref{algo:first_step} provides the pseudocode of this phase which is quite simple to follow.
 
 Here comes the first optimization we performed in the original code using the Map-Reduce platform. The input file is processed in parallel using multiple mappers, thus utilizing the parallelism that we inherently get by running our program on Map-Reduce. For huge graphs, this phase should take less to complete than running on a single machine. It also overcomes any memory issues for storing the complete graph in memory on a single machine, since the graph is created in a distributed fashion by the reducers.
 
@@ -195,4 +195,6 @@ This two operations can be combined and create the two phase algorithm. In each 
         \end{algorithmic}
 \end{algorithm}
 
-The Two-Phase Algorithm converges after $O(log^2 n)$ Map-Reduce rounds.
+iThe Two-Phase Algorithm converges after $O(log^2 n)$ Map-Reduce rounds, which is higher than the Hash-to-min. The advantage it provide is a smaller communication size, making it able to handle bigger graphs in theory.
+
+Intuitively this algorithm efficiently simulates the classical Union-Find algorithm in parallel. In the inner-loop each node, finds its local-minimum and adds an edge to it (this is equivalent to path compression). In the outer loop, distinct local minimums are connected and then joined in a union step. \cite{kiveris}
