@@ -43,7 +43,9 @@ It will output the time and number of components in the graph.
 
 Example:
 
+```bash
 java -jar sequential.jar simple_graph
+```
 
 ####Map Reduce
 
@@ -53,8 +55,12 @@ You will need to use a Hadoop cluster and run it as a Job (Custom Jar in Amazon)
 
 It takes the following arguments:
 
+```bash
 -program [hashToMin|hashToAll|twoPhase] -input graph_location_input -output output_folder -tmpdir temp_folder
+```
 
 Example
 
+```bash
 -program hashToMin -input s3://18645-termproject-input/big_graph -output s3://18645-termproject-output/hashtomin-big -tmpdir tmp
+```
