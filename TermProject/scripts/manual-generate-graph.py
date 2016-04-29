@@ -1,8 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-#Install pip install networkx
-
 from sys import argv
 from random import randint
 

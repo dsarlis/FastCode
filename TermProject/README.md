@@ -2,9 +2,9 @@
 
 ###Members
 
-Dimitris Sarlis
-Federico Ponte
-Gaurav Walia
+* Dimitris Sarlis
+* Federico Ponte
+* Gaurav Walia
 
 ###Requirements
 
@@ -64,3 +64,11 @@ Example
 ```bash
 -program hashToMin -input s3://18645-termproject-input/big_graph -output s3://18645-termproject-output/hashtomin-big -tmpdir tmp
 ```
+
+###Scripts
+
+Wei have three scripts:
+
+* create_cluster.sh: Creates the Amazon EMR with speacial configuration we were using.
+* generate-graph.py: Creates random graph using networkx from Python. Takes three arguments: number of nodes, number of edges and output file.
+* manual-generate-graph.py : Creates a random graph using two nested fors. Takes three arguments: number of nodes, output file and probability of generating edges.
