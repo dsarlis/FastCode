@@ -3,7 +3,7 @@
  	\begin{minipage}{42pc}
  		\centering
  		\includegraphics[width=40pc]{figures/mapreduce_example.pdf}
- 		\caption{Example run of Hast-to-min algorithm}
+ 		\caption{Example run of Hast-to-Min algorithm}
  		\label{figure:mapreduce_example}
 	\end{minipage}
 \end{tabular}
@@ -111,7 +111,7 @@ The are basically two phases in our Hash-to-min program for computing connected 
 
 Here comes the first optimization we performed in the original code using the Map-Reduce platform. The input file is processed in parallel using multiple mappers, thus utilizing the parallelism that we inherently get by running our program on Map-Reduce. For huge graphs, this phase should take less to complete than running on a single machine. It also overcomes any memory issues for storing the complete graph in memory on a single machine, since the graph is created in a distributed fashion by the reducers.
 
-The second phase of Map-Reduce is the iterative step which merges together smaller connected components to form large ones in each iteration until convergence is achieved (\ie until there are no changes in the connected components calculated). Algorithm \ref{algo:second_step} shows the approach we follow in this Map-Reduce job. The map function calculates the minimum node in each cluster which we call $v_min$. Then it emits $(u, v_min)$ for each node $u$ in the cluster and also $(v_min, cluster)$. This aggregates the connected component to $v_min$ while reassuring that the rest of the nodes are associated with $v_min$ to avoid creating duplicate connected components. This is the second optimization in our approach. The alternative here would be to emit the cluster to each node, but that would only bloat the number of data being transmitted and add an additional overhead. Only one node is enough to represent the whole connected component and therefore an easy choice is to use the minimum labeled node as the component's representative. The reducer then takes all the clusters that are associated with one node and merges them together. If the final cluster has changed, we increment a counter to indicate this. If no more changes have taken place, the algorithm has converged. As shown in \cite{rastogi}, the algorithm will converge in $O(logn)$ steps, where $n$ is the total number of nodes in the graph.
+The second phase of Map-Reduce is the iterative step which merges together smaller connected components to form large ones in each iteration until convergence is achieved (\ie until there are no changes in the connected components calculated). Algorithm \ref{algo:second_step} shows the approach we follow in this Map-Reduce job. The map function calculates the minimum node in each cluster which we call $v_min$. Then it emits $(u, v_min)$ for each node $u$ in the cluster and also $(v_min, cluster)$. This aggregates the connected component to $v_min$ while reassuring that the rest of the nodes are associated with $v_min$ to avoid creating duplicate connected components. This is the second optimization in our approach. The alternative here would be to emit the cluster to each node (which leads us to a version of Hash-to-All algorithm in \cite{rastogi}), but that would only bloat the number of data being transmitted and add an additional overhead. Only one node is enough to represent the whole connected component and therefore an easy choice is to use the minimum labeled node as the component's representative. The reducer then takes all the clusters that are associated with one node and merges them together. If the final cluster has changed, we increment a counter to indicate this. If no more changes have taken place, the algorithm has converged. As shown in \cite{rastogi}, the algorithm will converge in $O(logn)$ steps, where $n$ is the total number of nodes in the graph.
 
 The algorithm's complexity is linear in the number of edges and nodes in the graph, \ie $O(|V| + |E|)$. This means that the algorithm will be very efficient for relatively small graphs, but it will start being ineffective while the graphs grow bigger and bigger up to hundreds of million vertices and edges. In particular, the parsing time of the input file would be the bottleneck since it has to be done sequentially as well as the available memory on the machine we are using, since the graph has to fit in its memory for Algorithm \ref{algo:tarjan} to work. Map-Reduce helps to eliminate exactly these restrictions, since the parsing can be performed in parallel in addition to running the actual connected components algorithm in a parallel fashion.
 
@@ -119,7 +119,7 @@ The algorithm's complexity is linear in the number of edges and nodes in the gra
 
 The other one we picked is based on the Two-Phase algorithm presented in \cite{kiveris}. It first introduces two operations over a graph and then how to combine them in order to to find the connected components.
 
-Let $G = (V,E)$ and undirected graph, on $n = |V|$ nodes, and $m = |E|$ edges. For a node $v$, we denote by $\Gamma(v) = \{w|(v,w) \in E\}$ the neighbors of $v$ and $\Gamma^{+}(v) = \Gamma(v) \cup \{v\}$ as neighborhood of v and itself. Also, every node $v$ in the graph is associated with a real number label $l_{v}$. We now show the operations, which preserves the connectivity of the graph when performing them at all nodes in parallel.
+Let $G = (V,E)$ and undirected graph, on $n = |V|$ nodes, and $m = |E|$ edges. For a node $v$, we denote by $\Gamma(v) = \{w|(v,w) \in E\}$ the neighbors of $v$ and $\Gamma^{+}(v) = \Gamma(v) \cup \{v\}$ as neighborhood of v and itself. Also, every node $v$ in the graph is associated with a real number label $l_{v}$. In the following we present the operations (small-star and large-star), which preserve the connectivity of the graph when performing them at all nodes in parallel.
 
 \begin{algorithm}[!h]
         \caption{Small-star operation}
@@ -178,7 +178,7 @@ Let $G = (V,E)$ and undirected graph, on $n = |V|$ nodes, and $m = |E|$ edges. F
   \label{fig:smalllargestar}
 \end{figure}
 
-This two operations can be combined and create the two phase algorithm. In each phase, large-star is repeated until convergence followed by one small-star operation.
+These two operations can be combined and create the Two-Phase algorithm. In each inner loop, large-star is repeated until convergence is reached followed by one small-star operation. The outer loop is also repeated until convergence is met.
 
 \begin{algorithm}[!h]
         \caption{Two-Phase Algorithm}
@@ -195,6 +195,6 @@ This two operations can be combined and create the two phase algorithm. In each 
         \end{algorithmic}
 \end{algorithm}
 
-iThe Two-Phase Algorithm converges after $O(log^2 n)$ Map-Reduce rounds, which is higher than the Hash-to-min. The advantage it provide is a smaller communication size, making it able to handle bigger graphs in theory.
+Intuitively this algorithm efficiently simulates the classical Union-Find algorithm in parallel. In the inner-loop each node, finds its local minimum and adds an edge to it. In the outer loop, distinct local minimums are connected and then joined in a union step.
 
-Intuitively this algorithm efficiently simulates the classical Union-Find algorithm in parallel. In the inner-loop each node, finds its local-minimum and adds an edge to it (this is equivalent to path compression). In the outer loop, distinct local minimums are connected and then joined in a union step. \cite{kiveris}
+The Two-Phase Algorithm converges after $O(log^2 n)$ Map-Reduce rounds, which is higher than the Hash-to-min. The advantage it provides is a smaller communication size between consecutive rounds, making it able to handle bigger graphs in theory. This algorithm has proven to perform better than Hash-to-Min because of better load balancing in Map-Reduce rounds and sparsity of the transformed graphs.
